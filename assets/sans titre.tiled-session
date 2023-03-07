@@ -1,0 +1,53 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx": {
+            "scale": 0.0625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 552,
+                "y": 816
+            }
+        },
+        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx#Tileset_PlaceHolder": {
+            "scaleInDock": 0.5
+        },
+        "Tileset_base.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_test.tmx": {
+            "scale": 1,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 638.5,
+                "y": 1322
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/Phaser3_Test_scene/assets",
+    "last.imagePath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
+    "map.fixedSize": false,
+    "map.height": 50,
+    "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 50,
+    "openFiles": [
+        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx"
+    ],
+    "project": "sans titre.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx",
+        "Tileset_base.tsx",
+        "niveau_test.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx"
+}
