@@ -1,57 +1,41 @@
-class sceneTrois extends Phaser.Scene {
+class monde_test extends Phaser.Scene {
     constructor() {
-        super("sceneTrois");
-        this.posSpawnJoueurX = 912;
-        this.posSpawnJoueurY = 785;
+        super("MondeTest");
     }
 
     init(data) {
-        this.posSpawnJoueurX = data.posSpawnJoueurX;
-        this.posSpawnJoueurY = data.posSpawnJoueurY;
+
     }
 
     preload() {
-        //Preload Spritesheet
+        //Sprite Perso
         this.load.spritesheet('perso', 'assets/perso.png',
             { frameWidth: 32, frameHeight: 32 });
 
-        //Preload Map Tiled
-        this.load.image("Phaser_tuilesdejeu", "assets/tileset.png");
-        this.load.tilemapTiledJSON("carte", "assets/niveau_test.json");
-
-        //Preload Image
-        this.load.image("Texture_vide", "assets/Texture_vide.png");
-
+        //Preload Asset Tiled
+        this.load.image("Phaser_tuilesdejeu", "assets/Tiled/tileset.png");
+        this.load.tilemapTiledJSON("carte", "assets/Tiled/mondeTest.json");
     }
 
     create() {
-
-        //Load map
+        //Load Tiled
         this.carteDuNiveau = this.add.tilemap("carte");
-
-        //Load Tileset
         this.tileset = this.carteDuNiveau.addTilesetImage(
-            "Tileset_base",
+            "Tileset_PlaceHolder",
             "Phaser_tuilesdejeu"
         );
 
-        //Load calque
-        this.wall = this.carteDuNiveau.createLayer(
-            "wall",
+        //Load Calque
+        this.bordure = this.carteDuNiveau.createLayer(
+            "Bordure",
             this.tileset
         );
 
-        this.passage_3to2 = this.physics.add.group();
-        this.calque_passage_3to2 = this.carteDuNiveau.getObjectLayer('passage_3to2');
-        this.calque_passage_3to2.objects.forEach(calque_passage_3to2 => {
-            const POpassage_4 = this.passage_3to2.create(calque_passage_3to2.x + 16, calque_passage_3to2.y + 16, "Texture_vide").body.setAllowGravity(false);
-        });
-
-        //Définition calque solide
-        this.wall.setCollisionByProperty({ estSolide: true });
+        //Calque Solide
+        this.bordure.setCollisionByProperty({ estSolide: true });
 
         //Création Joueur
-        this.player = this.physics.add.sprite(this.posSpawnJoueurX, this.posSpawnJoueurY, 'perso');
+        this.player = this.physics.add.sprite(150, 150, 'perso');
         this.player.setCollideWorldBounds(true);
         this.anims.create({
             key: 'left',
@@ -74,41 +58,44 @@ class sceneTrois extends Phaser.Scene {
             frameRate: 20
         });
 
-        //Gestion Taille monde et caméra
-        this.physics.world.setBounds(1120, 0, 480, 1600);
-        this.cameras.main.setBounds(1120, 0, 480, 1600);
+        //Création Caméra
+        this.physics.world.setBounds(0, 0, 3200, 3200);
+        this.cameras.main.setBounds(0, 0, 3200, 3200);
         this.cameras.main.startFollow(this.player);
 
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
 
         //Création Collision
-        this.physics.add.collider(this.player, this.wall);
-        this.physics.add.overlap(this.player, this.passage_3to2, this.switch_passage_3to2, null, this);
-
+        //Joueur
+        this.physics.add.collider(this.bordure, this.player);
     }
 
     update() {
-        //Mouvement Joueur
+        //Mouvement
         if (this.cursors.up.isDown) {
             this.player.setVelocityY(-300);
             this.player.setVelocityX(0);
             this.player.anims.play('up');
+            this.player_facing = "up";
         }
         else if (this.cursors.down.isDown) {
             this.player.setVelocityY(300);
             this.player.setVelocityX(0);
             this.player.anims.play('down');
+            this.player_facing = "down";
         }
         else if (this.cursors.right.isDown) {
             this.player.setVelocityX(300);
             this.player.setVelocityY(0);
             this.player.anims.play('right');
+            this.player_facing = "right";
         }
         else if (this.cursors.left.isDown) {
             this.player.setVelocityX(-300);
             this.player.setVelocityY(0);
             this.player.anims.play('left');
+            this.player_facing = "left";
         }
         else {
             this.player.setVelocityY(0);
@@ -116,10 +103,4 @@ class sceneTrois extends Phaser.Scene {
         }
     }
 
-    switch_passage_3to2() {
-        this.scene.start('sceneDeux', {
-            posSpawnJoueurX : 1040,
-            posSpawnJoueurY : 528
-        })
-    }
 }
