@@ -26,6 +26,10 @@ class monde_test extends Phaser.Scene {
         //Preload Attaque
         this.load.image("sword_y", "assets/attaque_joueur_y.png");
         this.load.image("sword_x", "assets/attaque_joueur_x.png");
+
+        //Preload Barre de vie
+        this.load.image("CadreVie", "assets/CadreVie.png");
+        this.load.image("BarreVie", "assets/BarreVie.png");
     }
 
     create() {
@@ -137,13 +141,20 @@ class monde_test extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 3200, 3200);
         this.cameras.main.startFollow(this.player);
 
+        //Création Barre de vie
+        let healthContainer = this.add.sprite(100, 40, "CadreVie").setScrollFactor(0);
+        let healthBar = this.add.sprite(healthContainer.x, healthContainer.y, "BarreVie").setScrollFactor(0);
+        this.healthMask = this.add.sprite(healthBar.x, healthBar.y, "BarreVie").setScrollFactor(0);
+        this.healthMask.visible = false;
+        healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
+
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
 
         //Création Collision
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
-        this.physics.add.collider(this.player, this.calque_mob_switch_down);
+        this.physics.add.overlap(this.player, this.mob, this.perteVie, null, this);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_sword, this.if_clean_sword, this);
@@ -211,15 +222,6 @@ class monde_test extends Phaser.Scene {
         }
     }
 
-    //Switch Boolean
-    beFalse() {
-        return false
-    }
-
-    beTrue() {
-        return true
-    }
-
     //Gestion Pattern Mob
     mob_switch_right(mob) {
         mob.setVelocityX(100);
@@ -271,4 +273,13 @@ class monde_test extends Phaser.Scene {
         trigger_cleanSword = true;
     }
 
+    //Gestion Vie
+    perteVie(player, mob) {
+        this.healthMask.x -= 33;
+    }
+
 }
+
+
+
+//Frame Imu
