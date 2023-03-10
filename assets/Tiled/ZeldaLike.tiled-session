@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Hub01.tmx",
+    "activeFile": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -26,16 +26,16 @@
             "scale": 0.75,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": -1384,
-                "y": -160
+                "x": -256,
+                "y": -511.3333333333333
             }
         },
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx": {
             "scale": 0.75,
-            "selectedLayer": 11,
+            "selectedLayer": 15,
             "viewCenter": {
-                "x": -615.9999999999999,
-                "y": -82.66666666666663
+                "x": 909.3333333333333,
+                "y": 1149.3333333333335
             }
         },
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx#Tileset_PlaceHolder": {
@@ -81,8 +81,8 @@
     "project": "ZeldaLike.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Hub01.tmx",
+        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/v3.tsx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Hub01..tmx",
         "mondeTest.tmx"
