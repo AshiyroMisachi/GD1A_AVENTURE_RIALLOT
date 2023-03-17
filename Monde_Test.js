@@ -27,6 +27,10 @@ class monde_test extends Phaser.Scene {
         //Preload Barre de vie
         this.load.image("CadreVie", "assets/CadreVie.png");
         this.load.image("BarreVie", "assets/BarreVie.png");
+
+        //Preload Loot
+        this.load.image("Monnaie", "assets/Monnaie.png");
+        this.load.image("Soin", "assets/Soin.png");
     }
 
     create() {
@@ -34,6 +38,7 @@ class monde_test extends Phaser.Scene {
         this.player_beHit = false;
         this.trigger_cleanSword = false;
         this.clignotement = 0;
+        this.porteMonnaie = 0;
 
         this.player_facing = "up";
         this.health = 99;
@@ -110,6 +115,19 @@ class monde_test extends Phaser.Scene {
         });
         this.mob.setVelocityY(100);
 
+        //Placement Test Monnaie et Soin
+        this.heal = this.physics.add.group();
+        this.calque_TestHeal = this.carteDuNiveau.getObjectLayer('TestSoin');
+        this.calque_TestHeal.objects.forEach( calque_TestHeal => {
+            const POHeal = this.heal.create( calque_TestHeal.x + 16, calque_TestHeal.y + 16, "Soin");
+        });
+
+        this.money = this.physics.add.group();
+        this.calque_TestMoney = this.carteDuNiveau.getObjectLayer('TestMoney');
+        this.calque_TestMoney.objects.forEach(calque_TestMoney => {
+            const POHeal = this.money.create( calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
+        });
+
         //Bordure Mob
         this.calque_mob_switch_right = this.carteDuNiveau.createLayer(
             "Ennemi_Switch_Right",
@@ -145,11 +163,11 @@ class monde_test extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
 
         //Création Barre de vie
-        let healthContainer = this.add.sprite(100, 40, "CadreVie").setScrollFactor(0);
-        let healthBar = this.add.sprite(healthContainer.x, healthContainer.y, "BarreVie").setScrollFactor(0);
-        this.healthMask = this.add.sprite(healthBar.x, healthBar.y, "BarreVie").setScrollFactor(0);
+        this.healthContainer = this.add.sprite(100, 40, "CadreVie").setScrollFactor(0);
+        this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0);
+        this.healthMask = this.add.sprite(this.healthBar.x, this.healthBar.y, "BarreVie").setScrollFactor(0);
         this.healthMask.visible = false;
-        healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
+        this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
 
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -158,6 +176,8 @@ class monde_test extends Phaser.Scene {
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
+        this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
+        this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_sword, this.if_clean_sword, this);
@@ -340,4 +360,19 @@ class monde_test extends Phaser.Scene {
             this.time.delayedCall(200, this.able_hit, [], this);
         }
     }
+
+    gainVie(player, heal) {
+        heal.disableBody(true, true);
+        this.health += 10
+        this.healthMask.x += 10;
+    }
+
+    gainMoney(player, money) {
+        money.disableBody(true, true);
+        this.porteMonnaie += 1;
+    }
 }
+
+
+//AJOUT AFFICHAGE MONNAIE
+//LOOT SUR LES MOBS
