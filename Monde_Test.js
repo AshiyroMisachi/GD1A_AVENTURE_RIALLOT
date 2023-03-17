@@ -1,6 +1,3 @@
-player_block = false;
-trigger_cleanSword = false;
-
 class monde_test extends Phaser.Scene {
     constructor() {
         super("MondeTest");
@@ -33,7 +30,13 @@ class monde_test extends Phaser.Scene {
     }
 
     create() {
+        this.player_block = false;
+        this.player_beHit = false;
+        this.trigger_cleanSword = false;
+        this.clignotement = 0;
+
         this.player_facing = "up";
+        this.health = 99;
 
         //Création Joueur
         this.player = this.physics.add.sprite(150, 150, 'perso');
@@ -154,7 +157,7 @@ class monde_test extends Phaser.Scene {
         //Création Collision
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
-        this.physics.add.overlap(this.player, this.mob, this.perteVie, null, this);
+        this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_sword, this.if_clean_sword, this);
@@ -168,9 +171,7 @@ class monde_test extends Phaser.Scene {
     }
 
     update() {
-        if (player_block == false) {
-
-
+        if (this.player_block == false) {
             //Mouvement
             if (this.cursors.up.isDown) {
                 this.player.setVelocityY(-300);
@@ -214,10 +215,10 @@ class monde_test extends Phaser.Scene {
                 else if (this.player_facing == "left") {
                     this.attaque_sword.create(this.player.x - 32, this.player.y, "sword_x");
                 }
-                player_block = true;
+                this.player_block = true;
                 this.player.setVelocityX(0);
                 this.player.setVelocityY(0);
-                setTimeout(this.delock_attaque, 500);
+                this.time.delayedCall(500, this.delock_attaque, [], this);
             }
         }
     }
@@ -248,7 +249,7 @@ class monde_test extends Phaser.Scene {
     }
 
     //Kill Mob
-    kill_mob(mob){
+    kill_mob(mob) {
         mob.disableBody(true, true)
     }
 
@@ -258,8 +259,8 @@ class monde_test extends Phaser.Scene {
     }
 
     if_clean_sword() {
-        if (trigger_cleanSword == true) {
-            trigger_cleanSword = false;
+        if (this.trigger_cleanSword == true) {
+            this.trigger_cleanSword = false;
             return true
         }
         else {
@@ -267,19 +268,76 @@ class monde_test extends Phaser.Scene {
         }
     }
 
-    //Delock Joueur
+    //Delock pour l'attaque
     delock_attaque() {
-        player_block = false;
-        trigger_cleanSword = true;
+        this.player_block = false;
+        this.trigger_cleanSword = true;
+    }
+
+    //Delock Joueur
+    delock_joueur() {
+        this.player_block = false;
+    }
+
+    //Gestion Frame Imu
+    able_hit() {
+        this.player_beHit = false;
+    }
+
+    getHit() {
+        if (this.player_beHit == false) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    pinvisible() {
+        this.player.setVisible(false);
+        this.time.delayedCall(50, this.pvisible, [], this);
+    }
+
+    pvisible() {
+        if (this.clignotement < 3) {
+            this.time.delayedCall(50, this.pinvisible, [], this);
+            this.player.visible = true;
+            this.clignotement += 1;
+        }
+        else {
+            this.player.visible = true;
+            this.clignotement = 0;
+            this.able_hit();
+        }
     }
 
     //Gestion Vie
     perteVie(player, mob) {
-        this.healthMask.x -= 33;
+        this.player_block = true;
+        this.player_beHit = true;
+        if (mob.body.touching.left) {
+            player.setVelocityX(-400);
+        }
+        else if (mob.body.touching.right) {
+            player.setVelocityX(400);
+        }
+        else if (mob.body.touching.up) {
+            player.setVelocityY(-400);
+        }
+        else if (mob.body.touching.down) {
+            player.setVelocityY(400);
+        }
+        this.pinvisible();
+        this.healthMask.x -= 10;
+        this.health -= 10;
+        if (this.health < 0) {
+            this.player_block = true;
+            player.setTint(0xff0000);
+            this.physics.pause();
+        }
+        else {
+            this.time.delayedCall(200, this.delock_joueur, [], this);
+            this.time.delayedCall(200, this.able_hit, [], this);
+        }
     }
-
 }
-
-
-
-//Frame Imu
