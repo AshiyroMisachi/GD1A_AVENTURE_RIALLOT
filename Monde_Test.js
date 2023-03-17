@@ -31,6 +31,8 @@ class monde_test extends Phaser.Scene {
         //Preload Loot
         this.load.image("Monnaie", "assets/Monnaie.png");
         this.load.image("Soin", "assets/Soin.png");
+        this.load.image("Bow", "assets/Bow.png");
+        this.load.image("Tear", "assets/Tear.png");
     }
 
     create() {
@@ -39,6 +41,10 @@ class monde_test extends Phaser.Scene {
         this.trigger_cleanSword = false;
         this.clignotement = 0;
         this.porteMonnaie = 0;
+        this.loot = 0;
+        this.unlock_Sword = false;
+        this.unlock_Bow = false;
+        this.unlock_Tear = false;
 
         this.player_facing = "up";
         this.health = 99;
@@ -118,14 +124,14 @@ class monde_test extends Phaser.Scene {
         //Placement Test Monnaie et Soin
         this.heal = this.physics.add.group();
         this.calque_TestHeal = this.carteDuNiveau.getObjectLayer('TestSoin');
-        this.calque_TestHeal.objects.forEach( calque_TestHeal => {
-            const POHeal = this.heal.create( calque_TestHeal.x + 16, calque_TestHeal.y + 16, "Soin");
+        this.calque_TestHeal.objects.forEach(calque_TestHeal => {
+            const POHeal = this.heal.create(calque_TestHeal.x + 16, calque_TestHeal.y + 16, "Soin");
         });
 
         this.money = this.physics.add.group();
         this.calque_TestMoney = this.carteDuNiveau.getObjectLayer('TestMoney');
         this.calque_TestMoney.objects.forEach(calque_TestMoney => {
-            const POHeal = this.money.create( calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
+            const POHeal = this.money.create(calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
         });
 
         //Bordure Mob
@@ -149,13 +155,20 @@ class monde_test extends Phaser.Scene {
             this.tileset
         );
 
+        //Placement PowerUp
+        this.sword = this.physics.add.group();
+        this.sword.create(400, 120, "sword_y");
+        this.bow = this.physics.add.group();
+        this.bow.create(350, 120, "Bow");
+        this.tear = this.physics.add.group();
+        this.tear.create(300, 120, "Tear");
+
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_down.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_up.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_left.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_right.setCollisionByProperty({ estSolide: true });
-
 
         //Création Caméra
         this.physics.world.setBounds(0, 0, 3200, 3200);
@@ -169,6 +182,10 @@ class monde_test extends Phaser.Scene {
         this.healthMask.visible = false;
         this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
 
+        //Création Inventaire Monnaie
+        this.scoreText = this.add.text(1540, 16, "x" + this.porteMonnaie, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+        this.add.image(1520, 27, "Monnaie").setScale(3).setScrollFactor(0);
+
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -178,6 +195,9 @@ class monde_test extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
+        this.physics.add.overlap(this.player, this.sword, this.swordUnlock, null, this)
+        this.physics.add.overlap(this.player, this.bow, this.bowUnlock, null, this)
+        this.physics.add.overlap(this.player, this.tear, this.tearUnlock, null, this)
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_sword, this.if_clean_sword, this);
@@ -222,7 +242,7 @@ class monde_test extends Phaser.Scene {
                 this.player.setVelocityX(0);
             }
             //Attaque
-            if (this.cursors.space.isDown) {
+            if (this.cursors.space.isDown && this.unlock_Sword == true) {
                 if (this.player_facing == "up") {
                     this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_y");
                 }
@@ -271,6 +291,20 @@ class monde_test extends Phaser.Scene {
     //Kill Mob
     kill_mob(mob) {
         mob.disableBody(true, true)
+        this.lootMob(mob);
+    }
+
+    //Loot Mob
+
+    lootMob(mob) {
+        this.loot = Math.floor(Math.random() * (4 - 1)) + 1;
+        console.log(this.loot);
+        if (this.loot == 1) {
+            this.heal.create(mob.x, mob.y, "Soin");
+        }
+        else if (this.loot == 2) {
+            this.money.create(mob.x, mob.y, "Monnaie");
+        }
     }
 
     //Clean Attaque
@@ -300,10 +334,6 @@ class monde_test extends Phaser.Scene {
     }
 
     //Gestion Frame Imu
-    able_hit() {
-        this.player_beHit = false;
-    }
-
     getHit() {
         if (this.player_beHit == false) {
             return true
@@ -315,19 +345,19 @@ class monde_test extends Phaser.Scene {
 
     pinvisible() {
         this.player.setVisible(false);
-        this.time.delayedCall(50, this.pvisible, [], this);
+        this.time.delayedCall(100, this.pvisible, [], this);
     }
 
     pvisible() {
         if (this.clignotement < 3) {
-            this.time.delayedCall(50, this.pinvisible, [], this);
+            this.time.delayedCall(100, this.pinvisible, [], this);
             this.player.visible = true;
             this.clignotement += 1;
         }
         else {
             this.player.visible = true;
             this.clignotement = 0;
-            this.able_hit();
+            this.player_beHit = false;
         }
     }
 
@@ -357,22 +387,40 @@ class monde_test extends Phaser.Scene {
         }
         else {
             this.time.delayedCall(200, this.delock_joueur, [], this);
-            this.time.delayedCall(200, this.able_hit, [], this);
         }
     }
 
     gainVie(player, heal) {
         heal.disableBody(true, true);
-        this.health += 10
-        this.healthMask.x += 10;
+        if (this.health > 100) {
+            this.health += 10
+            this.healthMask.x += 10;
+        }
     }
 
     gainMoney(player, money) {
         money.disableBody(true, true);
         this.porteMonnaie += 1;
+        this.scoreText.setText('x' + this.porteMonnaie);
     }
+    
+    //Unlock Power Up
+    swordUnlock(player, sword){
+        sword.disableBody(true, true);
+        this.add.image(1450, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        this.unlock_Sword = true;
+    }
+
+    bowUnlock(player, bow) {
+        bow.disableBody(true, true);
+        this.add.image(1400, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+        this.unlock_Bow = true;
+    }
+
+    tearUnlock(player, tear) {
+        tear.disableBody(true, true);
+        this.add.image(1350, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+        this.unlock_Tear = true;
+    }
+
 }
-
-
-//AJOUT AFFICHAGE MONNAIE
-//LOOT SUR LES MOBS
