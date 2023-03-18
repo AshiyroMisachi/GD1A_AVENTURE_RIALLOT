@@ -23,6 +23,7 @@ class monde_test extends Phaser.Scene {
         //Preload Attaque
         this.load.image("sword_y", "assets/attaque_joueur_y.png");
         this.load.image("sword_x", "assets/attaque_joueur_x.png");
+        this.load.image("projBow", "assets/projBow.png");
 
         //Preload Barre de vie
         this.load.image("CadreVie", "assets/CadreVie.png");
@@ -38,10 +39,14 @@ class monde_test extends Phaser.Scene {
     create() {
         this.player_block = false;
         this.player_beHit = false;
-        this.trigger_cleanSword = false;
         this.clignotement = 0;
+
+        this.trigger_cleanSword = false;
+        this.trigger_shoot = false;
+
         this.porteMonnaie = 0;
         this.loot = 0;
+
         this.unlock_Sword = false;
         this.unlock_Bow = false;
         this.unlock_Tear = false;
@@ -74,6 +79,7 @@ class monde_test extends Phaser.Scene {
         });
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
+        this.proj_Bow = this.physics.add.group();
 
         //Création Mbob
         this.mob = this.physics.add.group();
@@ -200,7 +206,8 @@ class monde_test extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.tear, this.tearUnlock, null, this)
 
         //Création Collision Attaque
-        this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_sword, this.if_clean_sword, this);
+        this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
+        this.physics.add.collider(this.proj_Bow, this.bordure, this.clean_proj, null, this);
 
         //Ennemi
         this.physics.add.collider(this.mob, this.calque_mob_switch_down, this.mob_switch_down, null, this);
@@ -208,6 +215,7 @@ class monde_test extends Phaser.Scene {
         this.physics.add.collider(this.mob, this.calque_mob_switch_left, this.mob_switch_left, null, this);
         this.physics.add.collider(this.mob, this.calque_mob_switch_right, this.mob_switch_right, null, this);
         this.physics.add.collider(this.mob, this.attaque_sword, this.kill_mob, null, this);
+        this.physics.add.collider(this.mob, this.proj_Bow, this.kill_mob_bow, null, this);
     }
 
     update() {
@@ -260,6 +268,30 @@ class monde_test extends Phaser.Scene {
                 this.player.setVelocityY(0);
                 this.time.delayedCall(500, this.delock_attaque, [], this);
             }
+            //BoW
+            if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false){
+                if (this.player_facing == "up") {
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
+                    this.proj_Bow.setVelocityY(-200);
+                }
+                else if (this.player_facing == "down") {
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
+                    this.proj_Bow.setVelocityY(200);
+                }
+                else if (this.player_facing == "right") {
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
+                    this.proj_Bow.setVelocityX(200);
+                }
+                else if (this.player_facing == "left") {
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
+                    this.proj_Bow.setVelocityX(-200);
+                }
+                this.player_block = true;
+                this.trigger_shoot = true;
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(0);
+                this.time.delayedCall(500, this.delock_joueur, [], this);
+            }
         }
     }
 
@@ -294,8 +326,14 @@ class monde_test extends Phaser.Scene {
         this.lootMob(mob);
     }
 
-    //Loot Mob
+    kill_mob_bow(mob, projBow) {
+        mob.disableBody(true, true)
+        projBow.disableBody(true, true)
+        this.trigger_shoot = false;
+        this.lootMob(mob);
+    }
 
+    //Loot Mob
     lootMob(mob) {
         this.loot = Math.floor(Math.random() * (4 - 1)) + 1;
         console.log(this.loot);
@@ -308,8 +346,13 @@ class monde_test extends Phaser.Scene {
     }
 
     //Clean Attaque
-    clean_sword(attaque_sword) {
-        attaque_sword.disableBody(true, true);
+    clean_attaque(attaque) {
+        attaque.disableBody(true, true);
+    }
+
+    clean_proj(proj) {
+        proj.disableBody(true, true);
+        this.trigger_shoot = false;
     }
 
     if_clean_sword() {
