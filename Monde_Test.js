@@ -56,30 +56,7 @@ class monde_test extends Phaser.Scene {
 
         this.player_facing = "up";
         this.health = 99;
-
-        //Création Joueur
-        this.player = this.physics.add.sprite(150, 150, 'perso');
-        this.player.setCollideWorldBounds(true);
-        this.anims.create({
-            key: 'left',
-            frames: [{ key: 'perso', frame: 3 }],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'up',
-            frames: [{ key: 'perso', frame: 0 }],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'down',
-            frames: [{ key: 'perso', frame: 2 }],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'right',
-            frames: [{ key: 'perso', frame: 1 }],
-            frameRate: 20
-        });
+        
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
         this.proj_Bow = this.physics.add.group();
@@ -118,6 +95,11 @@ class monde_test extends Phaser.Scene {
         //Mur
         this.bordure = this.carteDuNiveau.createLayer(
             "Bordure",
+            this.tileset
+        );
+
+        this.river = this.carteDuNiveau.createLayer(
+            "River",
             this.tileset
         );
 
@@ -178,8 +160,33 @@ class monde_test extends Phaser.Scene {
         this.tear = this.physics.add.group();
         this.tear.create(300, 120, "Tear");
 
+        //Création Joueur
+        this.player = this.physics.add.sprite(150, 150, 'perso');
+        this.player.setCollideWorldBounds(true);
+        this.anims.create({
+            key: 'left',
+            frames: [{ key: 'perso', frame: 3 }],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'up',
+            frames: [{ key: 'perso', frame: 0 }],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'down',
+            frames: [{ key: 'perso', frame: 2 }],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'right',
+            frames: [{ key: 'perso', frame: 1 }],
+            frameRate: 20
+        });
+
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
+        this.river.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_down.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_up.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_left.setCollisionByProperty({ estSolide: true });
@@ -207,13 +214,14 @@ class monde_test extends Phaser.Scene {
         //Création Collision
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
+        this.physics.add.collider(this.player, this.rock);
+        this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
         this.physics.add.overlap(this.player, this.sword, this.swordUnlock, null, this)
         this.physics.add.overlap(this.player, this.bow, this.bowUnlock, null, this)
         this.physics.add.overlap(this.player, this.tear, this.tearUnlock, null, this)
-        this.physics.add.collider(this.player, this.rock);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
@@ -484,4 +492,12 @@ class monde_test extends Phaser.Scene {
         this.unlock_Tear = true;
     }
 
+    checkTear() {
+        if (this.unlock_Tear == false){
+            return true
+        }
+        else {
+            return false
+        }
+    }
 }
