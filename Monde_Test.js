@@ -34,9 +34,11 @@ class monde_test extends Phaser.Scene {
         this.load.image("Soin", "assets/Soin.png");
         this.load.image("Bow", "assets/Bow.png");
         this.load.image("Tear", "assets/Tear.png");
+        this.load.image("Key", "assets/Cle.png");
 
         //Preload Environnement
         this.load.image("Rock", "assets/Rock.png");
+        this.load.image("Door", "assets/Porte.png");
     }
 
     create() {
@@ -53,10 +55,11 @@ class monde_test extends Phaser.Scene {
         this.unlock_Sword = false;
         this.unlock_Bow = false;
         this.unlock_Tear = false;
+        this.unlock_Key = false;
 
         this.player_facing = "up";
-        this.health = 99;
-        
+        this.health = 100;
+
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
         this.proj_Bow = this.physics.add.group();
@@ -124,11 +127,18 @@ class monde_test extends Phaser.Scene {
         this.calque_TestMoney.objects.forEach(calque_TestMoney => {
             const POHeal = this.money.create(calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
         });
-        //Placement Rocher
+
+        //Placement Environnement
         this.rock = this.physics.add.staticGroup();
         this.calque_Rock = this.carteDuNiveau.getObjectLayer('Rock');
         this.calque_Rock.objects.forEach(calque_Rock => {
             const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
+        });
+
+        this.door = this.physics.add.staticGroup();
+        this.calque_Door = this.carteDuNiveau.getObjectLayer('Door');
+        this.calque_Door.objects.forEach(calque_Door => {
+            const PODoor = this.door.create(calque_Door.x + 16, calque_Door.y + 16, "Door");
         });
 
         //Bordure Mob
@@ -159,6 +169,10 @@ class monde_test extends Phaser.Scene {
         this.bow.create(350, 120, "Bow");
         this.tear = this.physics.add.group();
         this.tear.create(300, 120, "Tear");
+
+        //Placement Clé
+        this.key = this.physics.add.group();
+        this.key.create(250, 120, "Key");
 
         //Création Joueur
         this.player = this.physics.add.sprite(150, 150, 'perso');
@@ -216,12 +230,14 @@ class monde_test extends Phaser.Scene {
         this.physics.add.collider(this.player, this.bordure);
         this.physics.add.collider(this.player, this.rock);
         this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
+        this.physics.add.collider(this.player, this.door, this.opendDoor, null, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
-        this.physics.add.overlap(this.player, this.sword, this.swordUnlock, null, this)
-        this.physics.add.overlap(this.player, this.bow, this.bowUnlock, null, this)
-        this.physics.add.overlap(this.player, this.tear, this.tearUnlock, null, this)
+        this.physics.add.overlap(this.player, this.sword, this.swordUnlock, null, this);
+        this.physics.add.overlap(this.player, this.bow, this.bowUnlock, null, this);
+        this.physics.add.overlap(this.player, this.tear, this.tearUnlock, null, this);
+        this.physics.add.overlap(this.player, this.key, this.keyUnlock, null, this);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
@@ -288,7 +304,7 @@ class monde_test extends Phaser.Scene {
                 this.time.delayedCall(500, this.delock_attaque, [], this);
             }
             //Bow
-            if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false){
+            if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false) {
                 if (this.player_facing == "up") {
                     this.proj_Bow.create(this.player.x, this.player.y, "projBow");
                     this.proj_Bow.setVelocityY(-200);
@@ -461,7 +477,7 @@ class monde_test extends Phaser.Scene {
 
     gainVie(player, heal) {
         heal.disableBody(true, true);
-        if (this.health > 100) {
+        if (this.health < 100) {
             this.health += 10
             this.healthMask.x += 10;
         }
@@ -472,9 +488,9 @@ class monde_test extends Phaser.Scene {
         this.porteMonnaie += 1;
         this.scoreText.setText('x' + this.porteMonnaie);
     }
-    
+
     //Unlock Power Up
-    swordUnlock(player, sword){
+    swordUnlock(player, sword) {
         sword.disableBody(true, true);
         this.add.image(1450, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
         this.unlock_Sword = true;
@@ -493,11 +509,23 @@ class monde_test extends Phaser.Scene {
     }
 
     checkTear() {
-        if (this.unlock_Tear == false){
+        if (this.unlock_Tear == false) {
             return true
         }
         else {
             return false
+        }
+    }
+
+    keyUnlock(player, key) {
+        key.disableBody(true, true);
+        this.unlock_Key = true;
+        this.add.image(1300, 50, 'Key').setScale(2.5).setScrollFactor(0);
+    }
+
+    opendDoor(player, door) {
+        if (this.unlock_Key == true ) {
+            door.disableBody(true, true);
         }
     }
 }
