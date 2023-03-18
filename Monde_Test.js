@@ -34,6 +34,9 @@ class monde_test extends Phaser.Scene {
         this.load.image("Soin", "assets/Soin.png");
         this.load.image("Bow", "assets/Bow.png");
         this.load.image("Tear", "assets/Tear.png");
+
+        //Preload Environnement
+        this.load.image("Rock", "assets/Rock.png");
     }
 
     create() {
@@ -139,6 +142,12 @@ class monde_test extends Phaser.Scene {
         this.calque_TestMoney.objects.forEach(calque_TestMoney => {
             const POHeal = this.money.create(calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
         });
+        //Placement Rocher
+        this.rock = this.physics.add.staticGroup();
+        this.calque_Rock = this.carteDuNiveau.getObjectLayer('Rock');
+        this.calque_Rock.objects.forEach(calque_Rock => {
+            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
+        });
 
         //Bordure Mob
         this.calque_mob_switch_right = this.carteDuNiveau.createLayer(
@@ -204,10 +213,12 @@ class monde_test extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.sword, this.swordUnlock, null, this)
         this.physics.add.overlap(this.player, this.bow, this.bowUnlock, null, this)
         this.physics.add.overlap(this.player, this.tear, this.tearUnlock, null, this)
+        this.physics.add.collider(this.player, this.rock);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
         this.physics.add.collider(this.proj_Bow, this.bordure, this.clean_proj, null, this);
+        this.physics.add.collider(this.proj_Bow, this.rock, this.destroyRock, null, this);
 
         //Ennemi
         this.physics.add.collider(this.mob, this.calque_mob_switch_down, this.mob_switch_down, null, this);
@@ -268,7 +279,7 @@ class monde_test extends Phaser.Scene {
                 this.player.setVelocityY(0);
                 this.time.delayedCall(500, this.delock_attaque, [], this);
             }
-            //BoW
+            //Bow
             if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false){
                 if (this.player_facing == "up") {
                     this.proj_Bow.create(this.player.x, this.player.y, "projBow");
@@ -343,6 +354,13 @@ class monde_test extends Phaser.Scene {
         else if (this.loot == 2) {
             this.money.create(mob.x, mob.y, "Monnaie");
         }
+    }
+
+    //Activation / Destruction environnement
+    destroyRock(proj, rock) {
+        proj.disableBody(true, true);
+        rock.disableBody(true, true);
+        this.trigger_shoot = false;
     }
 
     //Clean Attaque
