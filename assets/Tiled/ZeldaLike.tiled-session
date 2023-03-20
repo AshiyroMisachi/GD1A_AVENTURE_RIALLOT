@@ -3,8 +3,9 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "foretDense.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         "": {
@@ -70,7 +71,16 @@
         },
         "Tileset_PlaceHolder.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "foretDense.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 516,
+                "y": -316
+            }
         },
         "mondeTest.tmx": {
             "scale": 0.75,
@@ -94,10 +104,14 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 100,
     "openFiles": [
+        "foretDense.tmx",
+        "Tileset_PlaceHolder.tsx"
     ],
     "project": "ZeldaLike.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "Tileset_PlaceHolder.tsx",
+        "foretDense.tmx",
         "mondeTest.tmx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Tileset.tsx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Hub01.tmx",
