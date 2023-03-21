@@ -13,7 +13,12 @@
 </head>
 
 <body>
+    <script src="mainScreen.js"></script>
     <script src="Monde_Test.js"></script>
+    <script src="darkForest.js"></script>
+    <script src="rockPlain.js"></script>
+    <script src="cave.js"></script>
+    <script src="temple.js"></script>
     <script type="text/javascript">
 
         var config = {
@@ -27,9 +32,8 @@
                 }
             },
             input: { gamepad: true },
-            scene: [monde_test]
+            scene: [MainScreen, Monde_test]
         };
-
         new Phaser.Game(config);
 
     </script>

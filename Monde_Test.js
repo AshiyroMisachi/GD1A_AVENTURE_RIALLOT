@@ -1,4 +1,4 @@
-class monde_test extends Phaser.Scene {
+class Monde_test extends Phaser.Scene {
     constructor() {
         super("MondeTest");
     }
