@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="20">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="21">
+ <editorsettings>
+  <export target="DarkForest.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" source="Tileset_PlaceHolder.tsx"/>
  <imagelayer id="2" name="Image" visible="0" offsetx="-258" offsety="184">
   <image source="AdvancedCroquis_Forest.png" width="3200" height="3200"/>

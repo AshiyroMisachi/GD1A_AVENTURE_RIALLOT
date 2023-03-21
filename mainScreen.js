@@ -19,10 +19,21 @@ class MainScreen extends Phaser.Scene {
     }
 
     lauchTest() {
+        console.log("Launch Test");
         this.scene.start('MondeTest');
     }
 
     launchGame(){
-
+        console.log("Launch Game");
+        this.scene.start('darkForest', {
+            porteMonnaie : 0,
+            unlock_Sword : false,
+            unlock_Bow : false,
+            unlock_Tear : false,
+            unlock_Key : false,
+            health : 100,
+            spawnX : 1937,
+            spawnY : 2710
+        });
     }
 }

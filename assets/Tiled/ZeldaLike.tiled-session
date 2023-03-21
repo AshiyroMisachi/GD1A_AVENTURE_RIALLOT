@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "foretDense.tmx",
+    "activeFile": "Tileset_PlaceHolder.tsx",
     "expandedProjectPaths": [
         "."
     ],
@@ -69,6 +69,41 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Cave.tmx": {
+            "scale": 0.268375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1602.2356776897998,
+                "y": 1602.2356776897998
+            }
+        },
+        "DarkForest.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 0.33,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 2060.6060606060605,
+                "y": 1924.2424242424242
+            }
+        },
+        "RockPlain.tmx": {
+            "scale": 0.268375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1598.5095482068002,
+                "y": 2090.358639962739
+            }
+        },
+        "Temple.tmx": {
+            "scale": 0.2603213094877236,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1601.86655798789,
+                "y": 1041.0211923614343
+            }
+        },
         "Tileset_PlaceHolder.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 1.5,
@@ -95,7 +130,7 @@
             "scaleInDock": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
+    "last.exportedFilePath": "C:/Users/a.riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
     "last.externalTilesetPath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "last.imagePath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "map.fixedSize": false,
@@ -104,22 +139,23 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 100,
     "openFiles": [
-        "foretDense.tmx",
         "Tileset_PlaceHolder.tsx"
     ],
     "project": "ZeldaLike.tiled-project",
     "property.type": "bool",
     "recentFiles": [
         "Tileset_PlaceHolder.tsx",
+        "Temple.tmx",
+        "Cave.tmx",
+        "RockPlain.tmx",
+        "DarkForest.tmx",
         "foretDense.tmx",
         "mondeTest.tmx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Tileset.tsx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Hub01.tmx",
         "C:/Users/Riallot/Downloads/vvvvv.tmx",
         "C:/Users/Riallot/tileset_place_holder_v2.tsx",
-        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx",
-        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/v3.tsx",
-        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Hub01..tmx"
+        "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Niveau_5_Alexandre.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.lastUsedFormat": "tsx"

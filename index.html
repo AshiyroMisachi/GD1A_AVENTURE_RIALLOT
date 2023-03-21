@@ -23,7 +23,7 @@
 
         var config = {
             type: Phaser.AUTO,
-            width: 1600, height: 900,
+            width: 1152, height: 648,
             physics: {
                 default: 'arcade',
                 arcade: {
@@ -32,7 +32,7 @@
                 }
             },
             input: { gamepad: true },
-            scene: [MainScreen, Monde_test]
+            scene: [MainScreen, Monde_test, DarkForest]
         };
         new Phaser.Game(config);
 
