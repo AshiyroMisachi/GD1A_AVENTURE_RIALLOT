@@ -306,26 +306,22 @@ class monde_test extends Phaser.Scene {
             //Bow
             if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false) {
                 if (this.player_facing == "up") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
-                    this.proj_Bow.setVelocityY(-200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(-200);
                 }
                 else if (this.player_facing == "down") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
-                    this.proj_Bow.setVelocityY(200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(200);
                 }
                 else if (this.player_facing == "right") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
-                    this.proj_Bow.setVelocityX(200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityX(200);
                 }
                 else if (this.player_facing == "left") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow");
-                    this.proj_Bow.setVelocityX(-200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityX(-200);
                 }
                 this.player_block = true;
                 this.trigger_shoot = true;
                 this.player.setVelocityX(0);
                 this.player.setVelocityY(0);
-                this.time.delayedCall(500, this.delock_joueur, [], this);
+                this.time.delayedCall(500, this.delock_shoot, [], this);
             }
         }
     }
@@ -411,6 +407,11 @@ class monde_test extends Phaser.Scene {
     delock_attaque() {
         this.player_block = false;
         this.trigger_cleanSword = true;
+    }
+
+    delock_shoot() {
+        this.player_block = false;
+        this.trigger_shoot = false;
     }
 
     //Delock Joueur
