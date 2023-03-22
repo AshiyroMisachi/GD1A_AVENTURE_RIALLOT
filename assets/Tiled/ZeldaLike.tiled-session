@@ -79,29 +79,33 @@
         },
         "DarkForest.tmx": {
             "expandedObjectLayers": [
+                7,
                 6
             ],
             "scale": 0.33,
-            "selectedLayer": 3,
+            "selectedLayer": -1,
             "viewCenter": {
-                "x": 2060.6060606060605,
-                "y": 1924.2424242424242
+                "x": 2257.5757575757575,
+                "y": 1036.3636363636365
             }
         },
         "RockPlain.tmx": {
-            "scale": 0.268375,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.25,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1598.5095482068002,
-                "y": 2090.358639962739
+                "x": 1776,
+                "y": 1920
             }
         },
         "Temple.tmx": {
             "scale": 0.2603213094877236,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1601.86655798789,
-                "y": 1041.0211923614343
+                "x": 1605.7079646017698,
+                "y": 1544.2454587796926
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -144,9 +148,9 @@
     "project": "ZeldaLike.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "Tileset_PlaceHolder.tsx",
         "Temple.tmx",
         "Cave.tmx",
+        "Tileset_PlaceHolder.tsx",
         "RockPlain.tmx",
         "DarkForest.tmx",
         "foretDense.tmx",

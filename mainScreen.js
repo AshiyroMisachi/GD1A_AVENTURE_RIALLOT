@@ -32,8 +32,8 @@ class MainScreen extends Phaser.Scene {
             unlock_Tear : false,
             unlock_Key : false,
             health : 100,
-            spawnX : 1937,
-            spawnY : 2710
+            spawnX : 1952,
+            spawnY : 2316
         });
     }
 }
