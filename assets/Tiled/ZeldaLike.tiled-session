@@ -70,42 +70,49 @@
             "scaleInEditor": 1
         },
         "Cave.tmx": {
-            "scale": 0.268375,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                6,
+                7
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1602.2356776897998,
-                "y": 1602.2356776897998
+                "x": 659,
+                "y": 2662.6666666666665
             }
         },
         "DarkForest.tmx": {
             "expandedObjectLayers": [
-                7,
                 6
             ],
-            "scale": 0.33,
-            "selectedLayer": -1,
+            "scale": 1.5,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 2257.5757575757575,
-                "y": 1036.3636363636365
+                "x": 1915.6666666666665,
+                "y": 3118.6666666666665
             }
         },
         "RockPlain.tmx": {
             "expandedObjectLayers": [
+                13,
                 5
             ],
-            "scale": 0.25,
-            "selectedLayer": 2,
+            "scale": 0.33,
+            "selectedLayer": 10,
             "viewCenter": {
-                "x": 1772,
-                "y": 1916
+                "x": 786.3636363636364,
+                "y": 230.30303030303025
             }
         },
         "Temple.tmx": {
-            "scale": 0.2603213094877236,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1605.7079646017698,
-                "y": 1544.2454587796926
+                "x": 1414.3333333333333,
+                "y": -64.66666666666669
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -134,7 +141,7 @@
             "scaleInDock": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/a.riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
+    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
     "last.externalTilesetPath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "last.imagePath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "map.fixedSize": false,

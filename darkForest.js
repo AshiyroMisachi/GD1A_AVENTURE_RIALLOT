@@ -44,7 +44,8 @@ class DarkForest extends Phaser.Scene {
         this.load.image("Key", "assets/Cle.png");
 
         //Preload Environnement
-        this.load.image("Vide", "assets/Texture_vide.png");
+        this.load.image("ForestToPlain", "assets/ForestToPlain.png");
+        this.load.image("ForestToTemple", "assets/ForestToTemple.png");
         this.load.image("Rock", "assets/Rock.png");
         this.load.image("Door", "assets/Porte.png");
     }
@@ -56,6 +57,7 @@ class DarkForest extends Phaser.Scene {
         this.trigger_cleanSword = false;
         this.trigger_shoot = false;
         this.player_facing = "up";
+        this.doorBreak = true;
 
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
@@ -104,26 +106,26 @@ class DarkForest extends Phaser.Scene {
         );
 
         //Placement Ennemi
-        //this.calque_mob = this.carteForest.getObjectLayer('Ennemi');
-        //this.calque_mob.objects.forEach(calque_mob => {
-        //    this.mob_create = this.physics.add.sprite(calque_mob.x + 16, calque_mob.y + 16, 'mob');
-        //    this.mob_create.anims.play('down_mob');
-        //    this.mob.add(this.mob_create)
-        //});
-        //this.mob.setVelocityY(100);
+        this.calque_mob = this.carteForest.getObjectLayer('Ennemi');
+        this.calque_mob.objects.forEach(calque_mob => {
+            this.mob_create = this.physics.add.sprite(calque_mob.x + 16, calque_mob.y + 16, 'mob');
+            this.mob_create.anims.play('down_mob');
+            this.mob.add(this.mob_create)
+        });
+        this.mob.setVelocityY(100);
 
         //Placement Test Monnaie et Soin
-        //this.heal = this.physics.add.group();
-        //this.calque_TestHeal = this.carteForest.getObjectLayer('TestSoin');
-        //this.calque_TestHeal.objects.forEach(calque_TestHeal => {
-        //    const POHeal = this.heal.create(calque_TestHeal.x + 16, calque_TestHeal.y + 16, "Soin");
-        //});
+        this.heal = this.physics.add.group();
+        this.calque_TestHeal = this.carteForest.getObjectLayer('TestSoin');
+        this.calque_TestHeal.objects.forEach(calque_TestHeal => {
+            const POHeal = this.heal.create(calque_TestHeal.x + 16, calque_TestHeal.y + 16, "Soin");
+        });
 
-        //this.money = this.physics.add.group();
-        //this.calque_TestMoney = this.carteForest.getObjectLayer('TestMoney');
-        //this.calque_TestMoney.objects.forEach(calque_TestMoney => {
-        //    const POHeal = this.money.create(calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
-        //});
+        this.money = this.physics.add.group();
+        this.calque_TestMoney = this.carteForest.getObjectLayer('TestMoney');
+        this.calque_TestMoney.objects.forEach(calque_TestMoney => {
+            const POHeal = this.money.create(calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
+        });
 
         //Placement Environnement
         this.rock = this.physics.add.staticGroup();
@@ -131,48 +133,63 @@ class DarkForest extends Phaser.Scene {
         this.calque_Rock.objects.forEach(calque_Rock => {
             const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
         });
-
-        //this.door = this.physics.add.staticGroup();
-        //this.calque_Door = this.carteForest.getObjectLayer('Door');
-        //this.calque_Door.objects.forEach(calque_Door => {
-        //    const PODoor = this.door.create(calque_Door.x + 16, calque_Door.y + 16, "Door");
-        //});
-
+        if (this.doorBreak){
+            this.door = this.physics.add.staticGroup();
+            this.door.create(1968, 3120, "Door");
+        }
+        
         //Placement Changement Scene
         this.travelToPlain = this.physics.add.staticGroup();
-        this.calque_travelToPlain = this.carteForest.getObjectLayer('travelToPlain');
-        this.calque_travelToPlain.objects.forEach(calque_travelToPlain => {
-            const POTravel = this.travelToPlain.create(calque_travelToPlain.x + 32, calque_travelToPlain.y + 32, "Vide");
-        });
+        this.travelToPlain.create(2336, 16, "ForestToPlain");
+        this.travelToTemple = this.physics.add.staticGroup();
+        this.travelToTemple.create(1968, 3184, "ForestToTemple");
 
         //Bordure Mob
-        //this.calque_mob_switch_right = this.carteForest.createLayer(
-        //    "Ennemi_Switch_Right",
-        //    this.tileset
-        //);
+        this.calque_mob_switch_right = this.carteForest.createLayer(
+            "Ennemi_Switch_Right",
+            this.tileset
+        );
 
-        //this.calque_mob_switch_left = this.carteForest.createLayer(
-        //    "Ennemi_Switch_Left",
-        //    this.tileset
-        //);
+        this.calque_mob_switch_left = this.carteForest.createLayer(
+            "Ennemi_Switch_Left",
+            this.tileset
+        );
 
-        //this.calque_mob_switch_up = this.carteForest.createLayer(
-        //    "Ennemi_Switch_Up",
-        //    this.tileset
-        //);
+        this.calque_mob_switch_up = this.carteForest.createLayer(
+            "Ennemi_Switch_Up",
+            this.tileset
+        );
 
-        //this.calque_mob_switch_down = this.carteForest.createLayer(
-        //    "Ennemi_Switch_Down",
-        //    this.tileset
-        //);
+        this.calque_mob_switch_down = this.carteForest.createLayer(
+            "Ennemi_Switch_Down",
+            this.tileset
+        );
 
         //Placement PowerUp
         this.sword = this.physics.add.group();
-        this.sword.create(1985, 2076, "sword_y");
+        if (this.unlock_Sword == false){
+            this.sword.create(1985, 2076, "sword_y");
+        }
+        else {
+            this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        }
+
         this.bow = this.physics.add.group();
-        this.bow.create(204, 270, "Bow");
+        if (this.unlock_Bow == false){
+            this.bow.create(204, 270, "Bow");
+        }
+        else {
+            this.add.image(950, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+        }
 
+        if (this.unlock_Tear) {
+            this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+        }
 
+        if (this.unlock_Key) {
+            this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+        }
+        
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso');
         this.player.setCollideWorldBounds(true);
@@ -200,10 +217,10 @@ class DarkForest extends Phaser.Scene {
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
         this.river.setCollisionByProperty({ estSolide: true });
-        //this.calque_mob_switch_down.setCollisionByProperty({ estSolide: true });
-        //this.calque_mob_switch_up.setCollisionByProperty({ estSolide: true });
-        //this.calque_mob_switch_left.setCollisionByProperty({ estSolide: true });
-        //this.calque_mob_switch_right.setCollisionByProperty({ estSolide: true });
+        this.calque_mob_switch_down.setCollisionByProperty({ estSolide: true });
+        this.calque_mob_switch_up.setCollisionByProperty({ estSolide: true });
+        this.calque_mob_switch_left.setCollisionByProperty({ estSolide: true });
+        this.calque_mob_switch_right.setCollisionByProperty({ estSolide: true });
 
         //Création Caméra
         this.physics.world.setBounds(0, 0, 3200, 3200);
@@ -231,15 +248,16 @@ class DarkForest extends Phaser.Scene {
         this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
         this.physics.add.collider(this.player, this.door, this.opendDoor, null, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
+
         //Pickup
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
         this.physics.add.overlap(this.player, this.sword, this.swordUnlock, null, this);
         this.physics.add.overlap(this.player, this.bow, this.bowUnlock, null, this);
-        this.physics.add.overlap(this.player, this.tear, this.tearUnlock, null, this);
-        this.physics.add.overlap(this.player, this.key, this.keyUnlock, null, this);
+
         //Changement de scene
         this.physics.add.overlap(this.player, this.travelToPlain, this.toPlain, null, this);
+        this.physics.add.overlap(this.player, this.travelToTemple, this.toTemple, null, this);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
@@ -287,7 +305,7 @@ class DarkForest extends Phaser.Scene {
                 this.player.setVelocityX(0);
             }
             //Attaque
-            if (this.cursors.space.isDown && this.unlock_Sword == true) {
+            if (this.cursors.space.isDown && this.unlock_Sword) {
                 if (this.player_facing == "up") {
                     this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_y");
                 }
@@ -306,7 +324,7 @@ class DarkForest extends Phaser.Scene {
                 this.time.delayedCall(500, this.delock_attaque, [], this);
             }
             //Bow
-            if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false) {
+            if (this.cursors.shift.isDown && this.unlock_Bow && this.trigger_shoot == false) {
                 if (this.player_facing == "up") {
                     this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(-200);
                 }
@@ -504,12 +522,6 @@ class DarkForest extends Phaser.Scene {
         this.unlock_Bow = true;
     }
 
-    tearUnlock(player, tear) {
-        tear.disableBody(true, true);
-        this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
-        this.unlock_Tear = true;
-    }
-
     checkTear() {
         if (this.unlock_Tear == false) {
             return true
@@ -519,20 +531,16 @@ class DarkForest extends Phaser.Scene {
         }
     }
 
-    keyUnlock(player, key) {
-        key.disableBody(true, true);
-        this.unlock_Key = true;
-        this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
-    }
-
     opendDoor(player, door) {
         if (this.unlock_Key == true ) {
             door.disableBody(true, true);
+            this.doorBreak = false;
         }
     }
 
     //Fonction Changement de scene
     toPlain() {
+        console.log("To plain");
         this.scene.start("rockPlain", {
             porteMonnaie : this.porteMonnaie,
             unlock_Sword : this.unlock_Sword,
@@ -542,6 +550,20 @@ class DarkForest extends Phaser.Scene {
             health : this.health,
             spawnX : 672,
             spawnY : 3144
+        });
+    }
+
+    toTemple() {
+        console.log("To Temple");
+        this.scene.start("waterTemple", {
+            porteMonnaie : this.porteMonnaie,
+            unlock_Sword : this.unlock_Sword,
+            unlock_Bow : this.unlock_Bow,
+            unlock_Tear : this.unlock_Tear,
+            unlock_Key : this.unlock_Key,
+            health : this.health,
+            spawnX : 1422,
+            spawnY : 80
         });
     }
 }

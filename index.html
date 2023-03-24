@@ -28,11 +28,11 @@
                 default: 'arcade',
                 arcade: {
                     gravity: { y: false },
-                    debug: false
+                    debug: true
                 }
             },
             input: { gamepad: true },
-            scene: [MainScreen, Monde_test, DarkForest, RockPlain]
+            scene: [MainScreen, Monde_test, DarkForest, RockPlain, Cave, WaterTemple]
         };
         new Phaser.Game(config);
 
