@@ -156,7 +156,29 @@ class RockPlain extends Phaser.Scene {
 
         //Placement PowerUp
         this.key = this.physics.add.group();
-        this.key.create(608, 639, "Key");
+        if (this.unlock_Key == false){
+            this.key.create(608, 639, "Key");
+        }
+        else {
+            this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+        }
+
+        if (this.unlock_Sword == false){
+            this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        }
+
+        if (this.unlock_Bow){
+            this.add.image(950, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+        }
+
+        if (this.unlock_Tear) {
+            this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+        }
+
+        if (this.unlock_Key) {
+            this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+        }
+        
 
         //Placement Switch Scene
         this.travelToForest = this.physics.add.staticGroup();

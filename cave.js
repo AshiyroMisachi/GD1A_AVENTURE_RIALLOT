@@ -158,7 +158,24 @@ class Cave extends Phaser.Scene {
 
         //Placement PowerUp
         this.tear = this.physics.add.group();
-        this.tear.create(576, 2848, "Tear");
+        if (this.unlock_Tear == false){
+            this.tear.create(576, 2848, "Tear");
+        }
+        else {
+            this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+        }
+
+        if (this.unlock_Sword == false){
+            this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        }
+
+        if (this.unlock_Bow){
+            this.add.image(950, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+        }
+
+        if (this.unlock_Key) {
+            this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+        }
 
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso');

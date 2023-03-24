@@ -158,6 +158,12 @@ class WaterTemple extends Phaser.Scene {
             this.tileset
         );
 
+        //Gestion Inventaire
+        this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+        this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        this.add.image(950, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+        this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso');
         this.player.setCollideWorldBounds(true);

@@ -6,7 +6,7 @@ class DarkForest extends Phaser.Scene {
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
         this.unlock_Sword = data.unlock_Sword;
-        this.unlock_Bow = true;
+        this.unlock_Bow = data.unlock_Bow;
         this.unlock_Tear = data.unlock_Tear;
         this.unlock_Key = data.unlock_Key;
         this.health = data.health;
