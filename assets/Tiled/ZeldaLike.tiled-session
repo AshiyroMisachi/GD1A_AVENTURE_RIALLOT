@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "RockPlain.tmx",
+    "activeFile": "Tileset_PlaceHolder.tsx",
     "expandedProjectPaths": [
         "."
     ],
@@ -107,13 +107,14 @@
         },
         "Temple.tmx": {
             "expandedObjectLayers": [
-                6
+                6,
+                7
             ],
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1414.3333333333333,
-                "y": -64.66666666666669
+                "x": 1413.6666666666665,
+                "y": -65.33333333333331
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -153,16 +154,18 @@
     "openFiles": [
         "Tileset_PlaceHolder.tsx",
         "DarkForest.tmx",
-        "RockPlain.tmx"
+        "RockPlain.tmx",
+        "Cave.tmx",
+        "Temple.tmx"
     ],
     "project": "ZeldaLike.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "Tileset_PlaceHolder.tsx",
-        "DarkForest.tmx",
-        "RockPlain.tmx",
         "Temple.tmx",
         "Cave.tmx",
+        "RockPlain.tmx",
+        "DarkForest.tmx",
+        "Tileset_PlaceHolder.tsx",
         "foretDense.tmx",
         "mondeTest.tmx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Tileset.tsx",
