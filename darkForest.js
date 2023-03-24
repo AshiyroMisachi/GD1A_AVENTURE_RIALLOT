@@ -14,41 +14,7 @@ class DarkForest extends Phaser.Scene {
         this.spawnY = data.spawnY;
     }
 
-    preload() {
-        //Sprite Perso
-        this.load.spritesheet('perso', 'assets/perso.png',
-            { frameWidth: 32, frameHeight: 32 });
-
-        //Spritesheet Mob
-        this.load.spritesheet('mob', 'assets/mob.png',
-            { frameWidth: 32, frameHeight: 32 });
-
-        //Preload Asset Tiled
-        this.load.image("Phaser_tuilesdejeu", "assets/Tiled/tileset.png");
-        this.load.tilemapTiledJSON("darkForest", "assets/Tiled/DarkForest.json");
-
-        //Preload Attaque
-        this.load.image("sword_y", "assets/attaque_joueur_y.png");
-        this.load.image("sword_x", "assets/attaque_joueur_x.png");
-        this.load.image("projBow", "assets/projBow.png");
-
-        //Preload Barre de vie
-        this.load.image("CadreVie", "assets/CadreVie.png");
-        this.load.image("BarreVie", "assets/BarreVie.png");
-
-        //Preload Loot
-        this.load.image("Monnaie", "assets/Monnaie.png");
-        this.load.image("Soin", "assets/Soin.png");
-        this.load.image("Bow", "assets/Bow.png");
-        this.load.image("Tear", "assets/Tear.png");
-        this.load.image("Key", "assets/Cle.png");
-
-        //Preload Environnement
-        this.load.image("ForestToPlain", "assets/ForestToPlain.png");
-        this.load.image("ForestToTemple", "assets/ForestToTemple.png");
-        this.load.image("Rock", "assets/Rock.png");
-        this.load.image("Door", "assets/Porte.png");
-    }
+    preload() {}
 
     create() {
         this.player_block = false;

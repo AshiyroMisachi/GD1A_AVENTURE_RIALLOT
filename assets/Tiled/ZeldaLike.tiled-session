@@ -83,10 +83,11 @@
         },
         "DarkForest.tmx": {
             "expandedObjectLayers": [
-                6
+                6,
+                9
             ],
             "scale": 1.5,
-            "selectedLayer": 9,
+            "selectedLayer": 5,
             "viewCenter": {
                 "x": 1915.6666666666665,
                 "y": 3118.6666666666665
