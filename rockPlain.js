@@ -163,7 +163,7 @@ class RockPlain extends Phaser.Scene {
             this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
         }
 
-        if (this.unlock_Sword == false){
+        if (this.unlock_Sword){
             this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
         }
 

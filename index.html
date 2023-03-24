@@ -20,7 +20,6 @@
     <script src="cave.js"></script>
     <script src="temple.js"></script>
     <script type="text/javascript">
-
         var config = {
             type: Phaser.AUTO,
             width: 1152, height: 648,
@@ -28,14 +27,13 @@
                 default: 'arcade',
                 arcade: {
                     gravity: { y: false },
-                    debug: true
+                    debug: false
                 }
             },
             input: { gamepad: true },
             scene: [MainScreen, Monde_test, DarkForest, RockPlain, Cave, WaterTemple]
         };
         new Phaser.Game(config);
-
     </script>
 </body>
 

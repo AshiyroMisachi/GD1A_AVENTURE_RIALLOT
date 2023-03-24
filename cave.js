@@ -6,7 +6,7 @@ class Cave extends Phaser.Scene {
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
         this.unlock_Sword = data.unlock_Sword;
-        this.unlock_Bow = true;
+        this.unlock_Bow = data.unlock_Bow;
         this.unlock_Tear = data.unlock_Tear;
         this.unlock_Key = data.unlock_Key;
         this.health = data.health;
@@ -165,7 +165,7 @@ class Cave extends Phaser.Scene {
             this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
         }
 
-        if (this.unlock_Sword == false){
+        if (this.unlock_Sword){
             this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
         }
 
@@ -288,6 +288,7 @@ class Cave extends Phaser.Scene {
                 this.player.setVelocityY(0);
                 this.player.setVelocityX(0);
             }
+
             //Attaque
             if (this.cursors.space.isDown && this.unlock_Sword == true) {
                 if (this.player_facing == "up") {
@@ -307,6 +308,7 @@ class Cave extends Phaser.Scene {
                 this.player.setVelocityY(0);
                 this.time.delayedCall(500, this.delock_attaque, [], this);
             }
+
             //Bow
             if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false) {
                 if (this.player_facing == "up") {
@@ -325,7 +327,7 @@ class Cave extends Phaser.Scene {
                 this.trigger_shoot = true;
                 this.player.setVelocityX(0);
                 this.player.setVelocityY(0);
-                this.time.delayedCall(500, this.delock_shoot, [], this);
+                this.time.delayedCall(200, this.delock_shoot, [], this);
             }
         }
     }
@@ -508,6 +510,7 @@ class Cave extends Phaser.Scene {
             return false
         }
     }
+
     //Fonction Changement de scene
     toPlain(){
         console.log("To plain");
