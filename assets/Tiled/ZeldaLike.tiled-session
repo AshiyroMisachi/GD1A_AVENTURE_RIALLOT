@@ -74,35 +74,36 @@
                 6,
                 7
             ],
-            "scale": 1.5,
+            "scale": 0.25,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 659,
-                "y": 2662.6666666666665
+                "x": 656,
+                "y": 1600
             }
         },
         "DarkForest.tmx": {
             "expandedObjectLayers": [
-                6,
-                9
+                10,
+                8,
+                9,
+                6
             ],
-            "scale": 1.5,
-            "selectedLayer": 5,
+            "scale": 0.75,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 1915.6666666666665,
-                "y": 3118.6666666666665
+                "x": 2694.6666666666665,
+                "y": 2174.6666666666665
             }
         },
         "RockPlain.tmx": {
             "expandedObjectLayers": [
-                13,
                 5
             ],
-            "scale": 0.33,
-            "selectedLayer": 10,
+            "scale": 0.75,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 786.3636363636364,
-                "y": 230.30303030303025
+                "x": 1201.3333333333335,
+                "y": 1829.333333333333
             }
         },
         "Temple.tmx": {
@@ -110,11 +111,11 @@
                 6,
                 7
             ],
-            "scale": 1.5,
+            "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1413.6666666666665,
-                "y": -65.33333333333331
+                "x": 1412.1212121212122,
+                "y": 1933.3333333333335
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -143,7 +144,7 @@
             "scaleInDock": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
+    "last.exportedFilePath": "C:/Users/a.riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
     "last.externalTilesetPath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "last.imagePath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "map.fixedSize": false,

@@ -130,7 +130,11 @@ class DarkForest extends Phaser.Scene {
             "Ennemi_Switch_Down",
             this.tileset
         );
-
+        
+        this.calque_mob_switch_down.setVisible(false);
+        this.calque_mob_switch_up.setVisible(false);
+        this.calque_mob_switch_right.setVisible(false);
+        this.calque_mob_switch_left.setVisible(false);
         //Placement PowerUp
         this.sword = this.physics.add.group();
         if (this.unlock_Sword == false){
@@ -243,25 +247,25 @@ class DarkForest extends Phaser.Scene {
         if (this.player_block == false) {
             //Mouvement
             if (this.cursors.up.isDown) {
-                this.player.setVelocityY(-300);
+                this.player.setVelocityY(-200);
                 this.player.setVelocityX(0);
                 this.player.anims.play('up');
                 this.player_facing = "up";
             }
             else if (this.cursors.down.isDown) {
-                this.player.setVelocityY(300);
+                this.player.setVelocityY(200);
                 this.player.setVelocityX(0);
                 this.player.anims.play('down');
                 this.player_facing = "down";
             }
             else if (this.cursors.right.isDown) {
-                this.player.setVelocityX(300);
+                this.player.setVelocityX(200);
                 this.player.setVelocityY(0);
                 this.player.anims.play('right');
                 this.player_facing = "right";
             }
             else if (this.cursors.left.isDown) {
-                this.player.setVelocityX(-300);
+                this.player.setVelocityX(-200);
                 this.player.setVelocityY(0);
                 this.player.anims.play('left');
                 this.player_facing = "left";
