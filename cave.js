@@ -59,6 +59,13 @@ class Cave extends Phaser.Scene {
         );
 
         //Load Calque
+        //Placement Environnement
+        this.rock = this.physics.add.staticGroup();
+        this.calque_Rock = this.carteCave.getObjectLayer('Rock');
+        this.calque_Rock.objects.forEach(calque_Rock => {
+            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
+        });
+
         //Mur
         this.bordure = this.carteCave.createLayer(
             "Bordure",
@@ -90,13 +97,6 @@ class Cave extends Phaser.Scene {
         this.calque_TestMoney = this.carteCave.getObjectLayer('TestMoney');
         this.calque_TestMoney.objects.forEach(calque_TestMoney => {
             const POHeal = this.money.create(calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
-        });
-
-        //Placement Environnement
-        this.rock = this.physics.add.staticGroup();
-        this.calque_Rock = this.carteCave.getObjectLayer('Rock');
-        this.calque_Rock.objects.forEach(calque_Rock => {
-            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
         });
 
         //Placement Changement Scene

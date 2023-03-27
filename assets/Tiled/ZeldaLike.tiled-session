@@ -72,27 +72,29 @@
         "Cave.tmx": {
             "expandedObjectLayers": [
                 6,
-                7
+                7,
+                8,
+                9
             ],
-            "scale": 0.25,
-            "selectedLayer": 2,
+            "scale": 1,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 656,
-                "y": 1600
+                "x": 1525.5,
+                "y": 1442
             }
         },
         "DarkForest.tmx": {
             "expandedObjectLayers": [
-                10,
+                6,
                 8,
                 9,
-                6
+                10
             ],
-            "scale": 0.75,
+            "scale": 0.33,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 2694.6666666666665,
-                "y": 2174.6666666666665
+                "x": 1983.3333333333333,
+                "y": 1369.6969696969695
             }
         },
         "RockPlain.tmx": {
@@ -102,8 +104,8 @@
             "scale": 0.5,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 1166,
-                "y": 1182
+                "x": 2181,
+                "y": 1444
             }
         },
         "Temple.tmx": {
@@ -114,8 +116,8 @@
             "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1412.1212121212122,
-                "y": 1933.3333333333335
+                "x": 1413.6363636363635,
+                "y": 330.30303030303025
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -144,7 +146,7 @@
             "scaleInDock": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/a.riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
+    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
     "last.externalTilesetPath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "last.imagePath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "map.fixedSize": false,
