@@ -204,6 +204,10 @@ class RockPlain extends Phaser.Scene {
 
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.input.gamepad.once('connected', function (pad) {
+            console.log("Manette Connecté");
+            this.controller = pad;
+        }, this);
     
         //Création Collision
         //Joueur
@@ -234,11 +238,6 @@ class RockPlain extends Phaser.Scene {
     }
 
     update() {
-        this.input.gamepad.once('connected', function (pad) {
-            console.log("Manette Connecté");
-            this.controller = pad;
-        }, this);
-        
         if (this.player_block == false) {
             //Mouvement
             if (this.cursors.up.isDown || this.controller.up) {
