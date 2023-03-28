@@ -60,10 +60,10 @@ class Cave extends Phaser.Scene {
 
         //Load Calque
         //Placement Environnement
-        this.rock = this.physics.add.staticGroup();
+        this.rock = this.physics.add.group();
         this.calque_Rock = this.carteCave.getObjectLayer('Rock');
         this.calque_Rock.objects.forEach(calque_Rock => {
-            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
+            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock").body.setImmovable(true);
         });
 
         //Mur
@@ -214,7 +214,11 @@ class Cave extends Phaser.Scene {
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
         this.physics.add.collider(this.proj_Bow, this.bordure, this.clean_proj, null, this);
-        this.physics.add.collider(this.proj_Bow, this.rock, this.destroyRock, null, this);
+        this.physics.add.collider(this.proj_Bow, this.rock, this.moveRock, null, this);
+
+        //Rocher
+        this.physics.add.collider(this.rock, this.rock, this.moveRockRock, null, this);
+        this.physics.add.collider(this.rock, this.bordure);
 
         //Ennemi
         this.physics.add.collider(this.mob, this.calque_mob_switch_down, this.mob_switch_down, null, this);
@@ -351,10 +355,41 @@ class Cave extends Phaser.Scene {
     }
 
     //Activation / Destruction environnement
-    destroyRock(proj, rock) {
+    moveRock(proj, rock) {
+        if (proj.body.touching.up){
+            rock.setVelocityY(-40);
+        }
+        else if (proj.body.touching.down){
+            rock.setVelocityY(40);
+        }
+        else if (proj.body.touching.right){
+            rock.setVelocityX(40);
+        }
+        else if (proj.body.touching.left){
+            rock.setVelocityX(-40);
+        }
+        this.time.delayedCall(400, (rock) => {
+            rock.body.setVelocity(0);
+        }, [rock], this)
         proj.disableBody(true, true);
-        rock.disableBody(true, true);
-        this.trigger_shoot = false;
+    }
+
+    moveRockRock(rock1, rock2) {
+        if (rock1.body.touching.up){
+            rock2.setVelocityY(-40);
+        }
+        else if (rock1.body.touching.down){
+            rock2.setVelocityY(40);
+        }
+        else if (rock1.body.touching.right){
+            rock2.setVelocityX(40);
+        }
+        else if (rock1.body.touching.left){
+            rock2.setVelocityX(-40);
+        }
+        this.time.delayedCall(1000, (rock) => {
+            rock.body.setVelocity(0);
+        }, [rock2], this)
     }
 
     //Clean Attaque
