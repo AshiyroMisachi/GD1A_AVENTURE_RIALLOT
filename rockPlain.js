@@ -121,6 +121,11 @@ class RockPlain extends Phaser.Scene {
             this.tileset
         );
 
+        this.calque_mob_switch_down.setVisible(false);
+        this.calque_mob_switch_up.setVisible(false);
+        this.calque_mob_switch_right.setVisible(false);
+        this.calque_mob_switch_left.setVisible(false);
+
         //Placement PowerUp
         this.key = this.physics.add.group();
         if (this.unlock_Key == false){

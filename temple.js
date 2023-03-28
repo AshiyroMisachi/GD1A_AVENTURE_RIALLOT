@@ -125,6 +125,11 @@ class WaterTemple extends Phaser.Scene {
             this.tileset
         );
 
+        this.calque_mob_switch_down.setVisible(false);
+        this.calque_mob_switch_up.setVisible(false);
+        this.calque_mob_switch_right.setVisible(false);
+        this.calque_mob_switch_left.setVisible(false);
+
         //Gestion Inventaire
         this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
         if (this.unlock_Sword){
