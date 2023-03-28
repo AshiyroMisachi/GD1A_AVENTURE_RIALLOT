@@ -17,13 +17,14 @@ class RockPlain extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.controller = false;
         this.player_block = false;
         this.player_beHit = false;
         this.clignotement = 0;
         this.trigger_cleanSword = false;
         this.trigger_shoot = false;
         this.player_facing = "up";
-
+        
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
         this.proj_Bow = this.physics.add.group();
@@ -203,7 +204,7 @@ class RockPlain extends Phaser.Scene {
 
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
-
+    
         //Création Collision
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
@@ -233,27 +234,32 @@ class RockPlain extends Phaser.Scene {
     }
 
     update() {
+        this.input.gamepad.once('connected', function (pad) {
+            console.log("Manette Connecté");
+            this.controller = pad;
+        }, this);
+        
         if (this.player_block == false) {
             //Mouvement
-            if (this.cursors.up.isDown) {
+            if (this.cursors.up.isDown || this.controller.up) {
                 this.player.setVelocityY(-200);
                 this.player.setVelocityX(0);
                 this.player.anims.play('up');
                 this.player_facing = "up";
             }
-            else if (this.cursors.down.isDown) {
+            else if (this.cursors.down.isDown || this.controller.down) {
                 this.player.setVelocityY(200);
                 this.player.setVelocityX(0);
                 this.player.anims.play('down');
                 this.player_facing = "down";
             }
-            else if (this.cursors.right.isDown) {
+            else if (this.cursors.right.isDown || this.controller.right) {
                 this.player.setVelocityX(200);
                 this.player.setVelocityY(0);
                 this.player.anims.play('right');
                 this.player_facing = "right";
             }
-            else if (this.cursors.left.isDown) {
+            else if (this.cursors.left.isDown || this.controller.left) {
                 this.player.setVelocityX(-200);
                 this.player.setVelocityY(0);
                 this.player.anims.play('left');
@@ -264,7 +270,7 @@ class RockPlain extends Phaser.Scene {
                 this.player.setVelocityX(0);
             }
             //Attaque
-            if (this.cursors.space.isDown && this.unlock_Sword == true) {
+            if (this.cursors.space.isDown && this.unlock_Sword || this.controller.A && this.unlock_Sword) {
                 if (this.player_facing == "up") {
                     this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_y");
                 }
@@ -283,7 +289,7 @@ class RockPlain extends Phaser.Scene {
                 this.time.delayedCall(500, this.delock_attaque, [], this);
             }
             //Bow
-            if (this.cursors.shift.isDown && this.unlock_Bow == true && this.trigger_shoot == false) {
+            if (this.cursors.shift.isDown && this.unlock_Bow && this.trigger_shoot == false || this.controller.B && this.unlock_Bow && this.trigger_shoot == false) {
                 if (this.player_facing == "up") {
                     this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(-200);
                 }
@@ -300,7 +306,7 @@ class RockPlain extends Phaser.Scene {
                 this.trigger_shoot = true;
                 this.player.setVelocityX(0);
                 this.player.setVelocityY(0);
-                this.time.delayedCall(500, this.delock_shoot, [], this);
+                this.time.delayedCall(1000, this.delock_shoot, [], this);
             }
         }
     }
