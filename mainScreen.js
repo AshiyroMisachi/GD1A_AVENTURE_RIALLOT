@@ -10,11 +10,13 @@ class MainScreen extends Phaser.Scene {
 
         //Sprite Perso
         this.load.spritesheet('perso', 'assets/perso.png',
-            { frameWidth: 32, frameHeight: 32 });
+            { frameWidth: 31, frameHeight: 61 });
 
         //Spritesheet Mob
         this.load.spritesheet('mob', 'assets/mob.png',
             { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet('mob_forest', 'assets/mob_forest.png',
+            { frameWidth: 57, frameHeight: 64 });
 
         //Preload Asset Tiled
         this.load.image("Phaser_tuilesdejeu", "assets/Tiled/tileset.png");

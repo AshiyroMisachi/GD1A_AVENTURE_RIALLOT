@@ -139,26 +139,50 @@ class WaterTemple extends Phaser.Scene {
         this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
 
         //Création Joueur
-        this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso');
+        this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
         this.anims.create({
             key: 'left',
-            frames: [{ key: 'perso', frame: 3 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
+            frameRate: 5,
+            repeat: -1
         });
         this.anims.create({
             key: 'up',
-            frames: [{ key: 'perso', frame: 0 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
+            frameRate: 5,
+            repeat: -1
         });
         this.anims.create({
             key: 'down',
-            frames: [{ key: 'perso', frame: 2 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
+            frameRate: 5,
+            repeat: -1
         });
         this.anims.create({
             key: 'right',
-            frames: [{ key: 'perso', frame: 1 }],
+            frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            fkey: 'left_stop',
+            frames: [ { key: 'perso', frame: 12 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            fkey: 'right_stop',
+            frames: [ { key: 'perso', frame: 8 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            fkey: 'up_stop',
+            frames: [ { key: 'perso', frame: 4 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            fkey: 'down_stop',
+            frames: [ { key: 'perso', frame: 0 } ],
             frameRate: 20
         });
 
@@ -231,28 +255,40 @@ class WaterTemple extends Phaser.Scene {
             if (this.cursors.up.isDown || this.controller.up) {
                 this.player.setVelocityY(-200);
                 this.player.setVelocityX(0);
-                this.player.anims.play('up');
+                this.player.anims.play('up', true);
                 this.player_facing = "up";
             }
             else if (this.cursors.down.isDown || this.controller.down) {
                 this.player.setVelocityY(200);
                 this.player.setVelocityX(0);
-                this.player.anims.play('down');
+                this.player.anims.play('down', true);
                 this.player_facing = "down";
             }
             else if (this.cursors.right.isDown || this.controller.right) {
                 this.player.setVelocityX(200);
                 this.player.setVelocityY(0);
-                this.player.anims.play('right');
+                this.player.anims.play('right', true);
                 this.player_facing = "right";
             }
             else if (this.cursors.left.isDown || this.controller.left) {
                 this.player.setVelocityX(-200);
                 this.player.setVelocityY(0);
-                this.player.anims.play('left');
+                this.player.anims.play('left', true);
                 this.player_facing = "left";
             }
             else {
+                if (this.player_facing == "left"){
+                    this.player.anims.play('left_stop');
+                }
+                else if (this.player_facing == "right"){
+                    this.player.anims.play('right_stop');
+                }
+                else if (this.player_facing == "up"){
+                    this.player.anims.play('up_stop');
+                }
+                else if (this.player_facing == "down"){
+                    this.player.anims.play('down_stop');
+                }
                 this.player.setVelocityY(0);
                 this.player.setVelocityX(0);
             }

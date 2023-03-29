@@ -36,23 +36,27 @@ class DarkForest extends Phaser.Scene {
         this.mob = this.physics.add.group();
         this.anims.create({
             key: 'left_mob',
-            frames: [{ key: 'mob', frame: 3 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:6,end:7}),
+            frameRate: 2,
+            repeat: -1
         });
         this.anims.create({
             key: 'up_mob',
-            frames: [{ key: 'mob', frame: 0 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:2,end:3}),
+            frameRate: 2,
+            repeat: -1
         });
         this.anims.create({
             key: 'down_mob',
-            frames: [{ key: 'mob', frame: 2 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:0,end:1}),
+            frameRate: 2,
+            repeat: -1
         });
         this.anims.create({
             key: 'right_mob',
-            frames: [{ key: 'mob', frame: 1 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:4,end:5}),
+            frameRate: 2,
+            repeat: -1
         });
 
         //Load Tiled
@@ -77,7 +81,7 @@ class DarkForest extends Phaser.Scene {
         //Placement Ennemi
         this.calque_mob = this.carteForest.getObjectLayer('Ennemi');
         this.calque_mob.objects.forEach(calque_mob => {
-            this.mob_create = this.physics.add.sprite(calque_mob.x + 16, calque_mob.y + 16, 'mob');
+            this.mob_create = this.physics.add.sprite(calque_mob.x + 16, calque_mob.y + 16, 'mob_forest').setScale(0.5);
             this.mob_create.anims.play('down_mob');
             this.mob.add(this.mob_create)
         });
@@ -165,26 +169,50 @@ class DarkForest extends Phaser.Scene {
         }
         
         //Création Joueur
-        this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso');
+        this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
         this.anims.create({
             key: 'left',
-            frames: [{ key: 'perso', frame: 3 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
+            frameRate: 5,
+            repeat: -1
         });
         this.anims.create({
             key: 'up',
-            frames: [{ key: 'perso', frame: 0 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
+            frameRate: 5,
+            repeat: -1
         });
         this.anims.create({
             key: 'down',
-            frames: [{ key: 'perso', frame: 2 }],
-            frameRate: 20
+            frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
+            frameRate: 5,
+            repeat: -1
         });
         this.anims.create({
             key: 'right',
-            frames: [{ key: 'perso', frame: 1 }],
+            frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'left_stop',
+            frames: [ { key: 'perso', frame: 12 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'right_stop',
+            frames: [ { key: 'perso', frame: 8 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'up_stop',
+            frames: [ { key: 'perso', frame: 4 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'down_stop',
+            frames: [ { key: 'perso', frame: 0 } ],
             frameRate: 20
         });
 
@@ -257,28 +285,40 @@ class DarkForest extends Phaser.Scene {
             if (this.cursors.up.isDown || this.controller.up) {
                 this.player.setVelocityY(-200);
                 this.player.setVelocityX(0);
-                this.player.anims.play('up');
+                this.player.anims.play('up', true);
                 this.player_facing = "up";
             }
             else if (this.cursors.down.isDown || this.controller.down) {
                 this.player.setVelocityY(200);
                 this.player.setVelocityX(0);
-                this.player.anims.play('down');
+                this.player.anims.play('down', true);
                 this.player_facing = "down";
             }
             else if (this.cursors.right.isDown || this.controller.right) {
                 this.player.setVelocityX(200);
                 this.player.setVelocityY(0);
-                this.player.anims.play('right');
+                this.player.anims.play('right', true);
                 this.player_facing = "right";
             }
             else if (this.cursors.left.isDown || this.controller.left) {
                 this.player.setVelocityX(-200);
                 this.player.setVelocityY(0);
-                this.player.anims.play('left');
+                this.player.anims.play('left', true);
                 this.player_facing = "left";
             }
             else {
+                if (this.player_facing == "left"){
+                    this.player.anims.play('left_stop');
+                }
+                else if (this.player_facing == "right"){
+                    this.player.anims.play('right_stop');
+                }
+                else if (this.player_facing == "up"){
+                    this.player.anims.play('up_stop');
+                }
+                else if (this.player_facing == "down"){
+                    this.player.anims.play('down_stop');
+                }
                 this.player.setVelocityY(0);
                 this.player.setVelocityX(0);
             }
@@ -527,7 +567,7 @@ class DarkForest extends Phaser.Scene {
             unlock_Key : this.unlock_Key,
             health : this.health,
             spawnX : 672,
-            spawnY : 3144
+            spawnY : 3134
         });
     }
 
