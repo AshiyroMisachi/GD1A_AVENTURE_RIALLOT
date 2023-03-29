@@ -105,10 +105,10 @@
                 5
             ],
             "scale": 0.5,
-            "selectedLayer": 9,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 1600,
-                "y": 1599
+                "x": 2180,
+                "y": 1444
             }
         },
         "Temple.tmx": {
