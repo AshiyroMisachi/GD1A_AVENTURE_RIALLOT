@@ -71,31 +71,34 @@
         },
         "Cave.tmx": {
             "expandedObjectLayers": [
-                6,
-                7,
+                9,
                 8,
-                9
+                7,
+                6
             ],
             "scale": 1,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 1525.5,
-                "y": 1442
+                "x": 1600,
+                "y": 1599.5
             }
         },
         "DarkForest.tmx": {
             "expandedObjectLayers": [
-                6,
-                8,
+                10,
                 9,
-                10
+                8,
+                6
             ],
             "scale": 0.33,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 1983.3333333333333,
-                "y": 1369.6969696969695
+                "x": 1600,
+                "y": 1598.4848484848485
             }
+        },
+        "DarkForest.tmx#Tileset_Final": {
+            "scaleInDock": 1
         },
         "RockPlain.tmx": {
             "expandedObjectLayers": [
@@ -104,20 +107,20 @@
             "scale": 0.5,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 2181,
-                "y": 1444
+                "x": 1600,
+                "y": 1599
             }
         },
         "Temple.tmx": {
             "expandedObjectLayers": [
-                6,
-                7
+                7,
+                6
             ],
             "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1413.6363636363635,
-                "y": 330.30303030303025
+                "x": 1600,
+                "y": 1598.4848484848485
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -146,7 +149,7 @@
             "scaleInDock": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
+    "last.exportedFilePath": "C:/Users/a.riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
     "last.externalTilesetPath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "last.imagePath": "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled",
     "map.fixedSize": false,

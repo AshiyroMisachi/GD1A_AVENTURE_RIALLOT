@@ -49,13 +49,12 @@ class MainScreen extends Phaser.Scene {
         this.load.image("ForestToPlain", "assets/ForestToPlain.png");
         this.load.image("ForestToTemple", "assets/ForestToTemple.png");
         this.load.image("Rock", "assets/Rock.png");
+        this.load.image("Rock_2", "assets/rock2.png");
         this.load.image("Door", "assets/Porte.png");
     }
 
     create() {
-        this.testButton = this.add.image(400, 200, "Button_Test").setInteractive();
-        this.gameButton = this.add.image(400, 400, "Button_Game").setInteractive();
-        this.testButton.on("pointerdown", this.lauchTest, this);
+        this.gameButton = this.add.image(500, 300, "Button_Game").setInteractive();
         this.gameButton.on("pointerdown", this.launchGame, this);
     }
 

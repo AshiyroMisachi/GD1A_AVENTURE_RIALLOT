@@ -100,6 +100,12 @@ class RockPlain extends Phaser.Scene {
             const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
         });
 
+        this.rock_2 = this.physics.add.group();
+        this.calque_Rock_2 = this.cartePlain.getObjectLayer('Rock_2');
+        this.calque_Rock_2.objects.forEach(calque_Rock_2 => {
+            const PORock = this.rock_2.create(calque_Rock_2.x + 16, calque_Rock_2.y + 16, "Rock_2").setImmovable(true);
+        });
+
         //Bordure Mob
         this.calque_mob_switch_right = this.cartePlain.createLayer(
             "Ennemi_Switch_Right",
@@ -218,12 +224,19 @@ class RockPlain extends Phaser.Scene {
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
         this.physics.add.collider(this.player, this.rock);
+        this.physics.add.collider(this.player, this.rock_2);
         this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
         //Pickup
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
         this.physics.add.overlap(this.player, this.key, this.keyUnlock, null, this);
+
+        //Rocher
+        this.physics.add.collider(this.rock_2, this.bordure);
+        this.physics.add.collider(this.rock_2, this.rock);
+        this.physics.add.collider(this.rock_2, this.rock_2);
+        
         //Changement de scene
         this.physics.add.overlap(this.player, this.travelToForest, this.toForest, null, this);
         this.physics.add.overlap(this.player, this.travelToCave, this.toCave, null, this);
@@ -232,6 +245,7 @@ class RockPlain extends Phaser.Scene {
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
         this.physics.add.collider(this.proj_Bow, this.bordure, this.clean_proj, null, this);
         this.physics.add.collider(this.proj_Bow, this.rock, this.destroyRock, null, this);
+        this.physics.add.collider(this.proj_Bow, this.rock_2, this.moveRock, null, this);
 
         //Ennemi
         this.physics.add.collider(this.mob, this.calque_mob_switch_down, this.mob_switch_down, null, this);
@@ -370,6 +384,25 @@ class RockPlain extends Phaser.Scene {
         proj.disableBody(true, true);
         rock.disableBody(true, true);
         this.trigger_shoot = false;
+    }
+
+    moveRock(proj, rock_2) {
+        if (proj.body.touching.up){
+            rock_2.setVelocityY(-60);
+        }
+        else if (proj.body.touching.down){
+            rock_2.setVelocityY(60);
+        }
+        else if (proj.body.touching.right){
+            rock_2.setVelocityX(60);
+        }
+        else if (proj.body.touching.left){
+            rock_2.setVelocityX(-60);
+        }
+        this.time.delayedCall(1000, (rock_2) => {
+            rock_2.body.setVelocity(0);
+        }, [rock_2], this);
+        proj.disableBody(true, true);
     }
 
     //Clean Attaque

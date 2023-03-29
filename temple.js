@@ -94,10 +94,10 @@ class WaterTemple extends Phaser.Scene {
         });
 
         //Placement Environnement
-        this.rock = this.physics.add.staticGroup();
+        this.rock = this.physics.add.group();
         this.calque_Rock = this.carteTemple.getObjectLayer('Rock');
         this.calque_Rock.objects.forEach(calque_Rock => {
-            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
+            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock_2").setImmovable(true);
         });
 
         //Placement Changement Scene
@@ -199,16 +199,22 @@ class WaterTemple extends Phaser.Scene {
         this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
         this.physics.add.collider(this.player, this.door, this.opendDoor, null, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
+
         //Pickup
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
+
+        //Rocher
+        this.physics.add.collider(this.rock, this.bordure);
+        this.physics.add.collider(this.rock, this.rock);
+
         //Changement de scene
         this.physics.add.overlap(this.player, this.travelToForest, this.toForest, null, this);
 
         //Création Collision Attaque
         this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
         this.physics.add.collider(this.proj_Bow, this.bordure, this.clean_proj, null, this);
-        this.physics.add.collider(this.proj_Bow, this.rock, this.destroyRock, null, this);
+        this.physics.add.collider(this.proj_Bow, this.rock, this.moveRock, null, this);
 
         //Ennemi
         this.physics.add.collider(this.mob, this.calque_mob_switch_down, this.mob_switch_down, null, this);
@@ -343,10 +349,23 @@ class WaterTemple extends Phaser.Scene {
     }
 
     //Activation / Destruction environnement
-    destroyRock(proj, rock) {
+    moveRock(proj, rock) {
+        if (proj.body.touching.up){
+            rock.setVelocityY(-60);
+        }
+        else if (proj.body.touching.down){
+            rock.setVelocityY(60);
+        }
+        else if (proj.body.touching.right){
+            rock.setVelocityX(60);
+        }
+        else if (proj.body.touching.left){
+            rock.setVelocityX(-60);
+        }
+        this.time.delayedCall(1000, (rock) => {
+            rock.body.setVelocity(0);
+        }, [rock], this)
         proj.disableBody(true, true);
-        rock.disableBody(true, true);
-        this.trigger_shoot = false;
     }
 
     //Clean Attaque

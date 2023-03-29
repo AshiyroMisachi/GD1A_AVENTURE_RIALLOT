@@ -65,7 +65,7 @@ class Cave extends Phaser.Scene {
         this.rock = this.physics.add.group();
         this.calque_Rock = this.carteCave.getObjectLayer('Rock');
         this.calque_Rock.objects.forEach(calque_Rock => {
-            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock").body.setImmovable(true);
+            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock_2").body.setImmovable(true);
         });
 
         //Mur
