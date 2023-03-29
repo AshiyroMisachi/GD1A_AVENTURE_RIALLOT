@@ -143,27 +143,31 @@ class DarkForest extends Phaser.Scene {
         this.calque_mob_switch_right.setVisible(false);
         this.calque_mob_switch_left.setVisible(false);
 
+        //Inventaire
+        this.add.image(0, 0, "BarreInventaire").setScrollFactor(0);
+
         //Placement PowerUp
         this.sword = this.physics.add.group();
         if (this.unlock_Sword == false){
             this.sword.create(1985, 2076, "sword_y");
-        }
-        else {
-            this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
         }
 
         this.bow = this.physics.add.group();
         if (this.unlock_Bow == false){
             this.bow.create(204, 270, "Bow");
         }
-        else {
-            this.add.image(950, 50, 'Bow').setScale(2.5).setScrollFactor(0);
-        }
 
+        //Inventaire
+        this.add.image(0, 0, "BarreInventaire").setScrollFactor(0);
+        if (this.unlock_Sword) {
+            this.add.image(900, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        }
+        if (this.unlock_Bow) {
+            this.add.image(900, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+        }
         if (this.unlock_Tear) {
             this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
         }
-
         if (this.unlock_Key) {
             this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
         }

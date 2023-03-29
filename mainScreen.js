@@ -31,7 +31,8 @@ class MainScreen extends Phaser.Scene {
         this.load.image("sword_x", "assets/attaque_joueur_x.png");
         this.load.image("projBow", "assets/projBow.png");
 
-        //Preload Barre de vie
+        //Preload Inventaire
+        this.load.image("BarreInventaire", "assets/BarreInventaire.png");
         this.load.image("CadreVie", "assets/CadreVie.png");
         this.load.image("BarreVie", "assets/BarreVie.png");
 
@@ -56,7 +57,7 @@ class MainScreen extends Phaser.Scene {
     }
 
     create() {
-        this.gameButton = this.add.image(500, 300, "Button_Game").setInteractive();
+        this.gameButton = this.add.image(0, 0, "Button_Game").setInteractive();
         this.gameButton.on("pointerdown", this.launchGame, this);
     }
 
