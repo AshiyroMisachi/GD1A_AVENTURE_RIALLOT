@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "RockPlain.tmx",
+    "activeFile": "Temple.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -116,11 +116,16 @@
                 7,
                 6
             ],
-            "scale": 0.33,
-            "selectedLayer": 2,
+            "scale": 1,
+            "selectedLayer": 1,
             "viewCenter": {
+<<<<<<< Updated upstream
                 "x": 1600,
                 "y": 1598.4848484848485
+=======
+                "x": 2138.5,
+                "y": 1117
+>>>>>>> Stashed changes
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -169,9 +174,9 @@
     "recentFiles": [
         "Tileset_PlaceHolder.tsx",
         "DarkForest.tmx",
-        "Temple.tmx",
-        "Cave.tmx",
         "RockPlain.tmx",
+        "Cave.tmx",
+        "Temple.tmx",
         "foretDense.tmx",
         "mondeTest.tmx",
         "C:/Users/Riallot/Desktop/ETPA/LevelDesign/VVVVVV_Level/Tiled/Tileset.tsx",
