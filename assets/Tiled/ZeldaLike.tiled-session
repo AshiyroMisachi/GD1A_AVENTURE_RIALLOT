@@ -1,4 +1,27 @@
 {
+    "activeFile": "Temple.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Temple.tmx": {
+            "scale": 1,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 1601.5,
+                "y": 506
+            }
+        },
+        "Tileset_PlaceHolder.tsx": {
+            "scaleInDock": 1
+        }
+    },
     "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
-    "map.lastUsedExportFilter": "Tous les Fichiers (*)"
+    "map.lastUsedExportFilter": "Tous les Fichiers (*)",
+    "openFiles": [
+        "Temple.tmx"
+    ],
+    "project": "",
+    "recentFiles": [
+        "Temple.tmx"
+    ]
 }
