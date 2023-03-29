@@ -18,6 +18,7 @@ class MainScreen extends Phaser.Scene {
 
         //Preload Asset Tiled
         this.load.image("Phaser_tuilesdejeu", "assets/Tiled/tileset.png");
+        this.load.image("FTileset", "assets/Tiled/TilesetFinal.png");
         this.load.tilemapTiledJSON("darkForest", "assets/Tiled/DarkForest.json");
         this.load.tilemapTiledJSON("rockPlain", "assets/Tiled/RockPlain.json");
         this.load.tilemapTiledJSON("cave", "assets/Tiled/Cave.json");

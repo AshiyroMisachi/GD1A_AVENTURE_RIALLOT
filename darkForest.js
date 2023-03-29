@@ -58,8 +58,8 @@ class DarkForest extends Phaser.Scene {
         //Load Tiled
         this.carteForest = this.add.tilemap("darkForest");
         this.tileset = this.carteForest.addTilesetImage(
-            "Tileset_PlaceHolder",
-            "Phaser_tuilesdejeu"
+            "Tileset_Final",
+            "FTileset"
         );
 
         //Load Calque
