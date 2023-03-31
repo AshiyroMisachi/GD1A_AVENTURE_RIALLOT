@@ -1,14 +1,25 @@
 {
-    "activeFile": "Temple.tmx",
+    "activeFile": "DarkForest.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "DarkForest.tmx": {
+            "scale": 0.266,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1603.3834586466169,
+                "y": 1601.5037593984962
+            }
+        },
+        "DarkForest.tmx#Tileset_Final": {
+            "scaleInDock": 1
+        },
         "Temple.tmx": {
             "scale": 1,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 1601.5,
-                "y": 506
+                "x": 1600,
+                "y": 1599.5
             }
         },
         "Tileset_PlaceHolder.tsx": {
@@ -18,10 +29,12 @@
     "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
     "map.lastUsedExportFilter": "Tous les Fichiers (*)",
     "openFiles": [
-        "Temple.tmx"
+        "Temple.tmx",
+        "DarkForest.tmx"
     ],
     "project": "",
     "recentFiles": [
-        "Temple.tmx"
+        "Temple.tmx",
+        "DarkForest.tmx"
     ]
 }
