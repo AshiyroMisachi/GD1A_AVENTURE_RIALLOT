@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="63">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="66">
  <editorsettings>
   <export target="Temple.json" format="json"/>
  </editorsettings>
@@ -238,34 +238,28 @@
   <object id="3" x="800" y="832" width="32" height="32"/>
   <object id="6" x="1088" y="480" width="32" height="32"/>
   <object id="7" x="1056" y="512" width="32" height="32"/>
-  <object id="8" x="1088" y="544" width="32" height="32"/>
   <object id="9" x="1088" y="576" width="32" height="32"/>
-  <object id="10" x="1088" y="512" width="32" height="32"/>
-  <object id="12" x="1024" y="576" width="32" height="32"/>
-  <object id="13" x="1056" y="576" width="32" height="32"/>
   <object id="22" x="1728" y="576" width="32" height="32"/>
-  <object id="24" x="1760" y="544" width="32" height="32"/>
-  <object id="25" x="1792" y="576" width="32" height="32"/>
   <object id="26" x="1792" y="544" width="32" height="32"/>
   <object id="27" x="1792" y="512" width="32" height="32"/>
   <object id="28" x="1824" y="480" width="32" height="32"/>
   <object id="29" x="1792" y="480" width="32" height="32"/>
-  <object id="31" x="1760" y="480" width="32" height="32"/>
   <object id="32" x="1824" y="576" width="32" height="32"/>
   <object id="33" x="1856" y="1120" width="32" height="32"/>
   <object id="35" x="1824" y="1088" width="32" height="32"/>
-  <object id="36" x="1856" y="1056" width="32" height="32"/>
-  <object id="37" x="1792" y="1120" width="32" height="32"/>
   <object id="38" x="1792" y="1088" width="32" height="32"/>
   <object id="39" x="1760" y="1056" width="32" height="32"/>
   <object id="40" x="1376" y="1408" width="32" height="32"/>
-  <object id="41" x="1376" y="1440" width="32" height="32"/>
-  <object id="42" x="1408" y="1408" width="32" height="32"/>
   <object id="43" x="1408" y="1376" width="32" height="32"/>
   <object id="45" x="1408" y="1344" width="32" height="32"/>
   <object id="46" x="1440" y="1376" width="32" height="32"/>
   <object id="48" x="1440" y="1472" width="32" height="32"/>
   <object id="49" x="1376" y="1504" width="32" height="32"/>
+  <object id="64" x="1024" y="544" width="32" height="32"/>
+  <object id="65" x="1056" y="576" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="14" name="Statuette">
+  <object id="63" x="768" y="1088" width="32" height="32"/>
  </objectgroup>
  <layer id="10" name="Ennemi_Switch_Right" width="100" height="100">
   <data encoding="csv">

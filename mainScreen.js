@@ -64,8 +64,102 @@ class MainScreen extends Phaser.Scene {
     }
 
     create() {
-        this.gameButton = this.add.image(0, 0, "Button_Game").setInteractive();
+        this.gameButton = this.add.image(400, 200, "Button_Game").setInteractive();
         this.gameButton.on("pointerdown", this.launchGame, this);
+
+        //Animation Mob Forest
+        this.anims.create({
+            key: 'left_mob',
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:6,end:7}),
+            frameRate: 2,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'up_mob',
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:2,end:3}),
+            frameRate: 2,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'down_mob',
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:0,end:1}),
+            frameRate: 2,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'right_mob',
+            frames: this.anims.generateFrameNumbers('mob_forest', {start:4,end:5}),
+            frameRate: 2,
+            repeat: -1
+        });
+        
+        //Animation Mob Base
+        this.anims.create({
+            key: 'left_mob_base',
+            frames: [{ key: 'mob', frame: 3 }],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'up_mob_base',
+            frames: [{ key: 'mob', frame: 0 }],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'down_mob_base',
+            frames: [{ key: 'mob', frame: 2 }],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'right_mob_base',
+            frames: [{ key: 'mob', frame: 1 }],
+            frameRate: 20
+        });
+
+        //Animation Joueur
+        this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'up',
+            frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'down',
+            frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'left_stop',
+            frames: [ { key: 'perso', frame: 12 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'right_stop',
+            frames: [ { key: 'perso', frame: 8 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'up_stop',
+            frames: [ { key: 'perso', frame: 4 } ],
+            frameRate: 20
+        });
+        this.anims.create({
+            key: 'down_stop',
+            frames: [ { key: 'perso', frame: 0 } ],
+            frameRate: 20
+        });
     }
 
     update() {

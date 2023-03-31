@@ -5,6 +5,7 @@ class RockPlain extends Phaser.Scene {
 
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
+        this.statue = data.statue;
         this.unlock_Sword = data.unlock_Sword;
         this.unlock_Bow = data.unlock_Bow;
         this.unlock_Tear = data.unlock_Tear;
@@ -29,29 +30,6 @@ class RockPlain extends Phaser.Scene {
         this.attaque_sword = this.physics.add.staticGroup();
         this.proj_Bow = this.physics.add.group();
 
-        //Création Mbob
-        this.mob = this.physics.add.group();
-        this.anims.create({
-            key: 'left_mob',
-            frames: [{ key: 'mob', frame: 3 }],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'up_mob',
-            frames: [{ key: 'mob', frame: 0 }],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'down_mob',
-            frames: [{ key: 'mob', frame: 2 }],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'right_mob',
-            frames: [{ key: 'mob', frame: 1 }],
-            frameRate: 20
-        });
-
         //Load Tiled
         this.cartePlain = this.add.tilemap("rockPlain");
         this.tileset = this.cartePlain.addTilesetImage(
@@ -72,10 +50,11 @@ class RockPlain extends Phaser.Scene {
         );
 
         //Placement Ennemi
+        this.mob = this.physics.add.group();
         this.calque_mob = this.cartePlain.getObjectLayer('Ennemi');
         this.calque_mob.objects.forEach(calque_mob => {
             this.mob_create = this.physics.add.sprite(calque_mob.x + 16, calque_mob.y + 16, 'mob');
-            this.mob_create.anims.play('down_mob');
+            this.mob_create.anims.play('down_mob_base');
             this.mob.add(this.mob_create)
         });
         this.mob.setVelocityY(100);
@@ -103,7 +82,14 @@ class RockPlain extends Phaser.Scene {
         this.rock_2 = this.physics.add.group();
         this.calque_Rock_2 = this.cartePlain.getObjectLayer('Rock_2');
         this.calque_Rock_2.objects.forEach(calque_Rock_2 => {
-            const PORock = this.rock_2.create(calque_Rock_2.x + 16, calque_Rock_2.y + 16, "Rock_2").setImmovable(true);
+            const PORock = this.rock_2.create(calque_Rock_2.x + 16, calque_Rock_2.y + 16, "Rock_2").setPushable(false);
+        });
+
+        //Placement Statue
+        this.statuette = this.physics.add.staticGroup();
+        this.calque_Statue = this.carteForest.getObjectLayer('Statuette');
+        this.calque_Statue.objects.forEach(calque_Statue => {
+            const POStatue = this.statuette.create(calque_Statue.x + 16, calque_Statue.y + 16, "Statue")
         });
 
         //Bordure Mob
@@ -137,25 +123,34 @@ class RockPlain extends Phaser.Scene {
         if (this.unlock_Key == false){
             this.key.create(608, 639, "Key");
         }
-        else {
-            this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+       
+        //Inventaire
+        this.add.image(400, 28, "BarreInventaire").setScrollFactor(0).setScale(0.5);
+        if (this.unlock_Sword) {
+            this.add.image(328, 28, 'sword_up').setScrollFactor(0);
         }
-
-        if (this.unlock_Sword){
-            this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        if (this.unlock_Bow) {
+            this.add.image(385, 28, 'Bow').setScale(1.25).setScrollFactor(0);
         }
-
-        if (this.unlock_Bow){
-            this.add.image(950, 50, 'Bow').setScale(2.5).setScrollFactor(0);
-        }
-
         if (this.unlock_Tear) {
-            this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+            this.add.image(443, 28, 'Tear').setScale(2).setScrollFactor(0);
+        }
+        if (this.unlock_Key) {
+            this.add.image(500, 28, 'Key').setScale(1.75).setScrollFactor(0);
         }
 
-        if (this.unlock_Key) {
-            this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
-        }
+        //Création Inventaire Monnaie
+        this.scoreText = this.add.text(605, 20, "x" + this.porteMonnaie, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+        this.add.image(585, 29, "Monnaie").setScale(2).setScrollFactor(0);
+        this.countStatue = this.add.text(715, 20, "x" + this.statue, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+        this.add.image(700, 29, "Statue").setScale(1.4).setScrollFactor(0);
+
+        //Création Barre de vie
+        this.healthContainer = this.add.sprite(140, 28, "CadreVie").setScrollFactor(0).setVisible(false);
+        this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask.visible = false;
+        this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
         
 
         //Placement Switch Scene
@@ -168,50 +163,6 @@ class RockPlain extends Phaser.Scene {
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'up',
-            frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'down',
-            frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            fkey: 'left_stop',
-            frames: [ { key: 'perso', frame: 12 } ],
-            frameRate: 20
-        });
-        this.anims.create({
-            fkey: 'right_stop',
-            frames: [ { key: 'perso', frame: 8 } ],
-            frameRate: 20
-        });
-        this.anims.create({
-            fkey: 'up_stop',
-            frames: [ { key: 'perso', frame: 4 } ],
-            frameRate: 20
-        });
-        this.anims.create({
-            fkey: 'down_stop',
-            frames: [ { key: 'perso', frame: 0 } ],
-            frameRate: 20
-        });
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
@@ -225,17 +176,6 @@ class RockPlain extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 3200, 3200);
         this.cameras.main.setBounds(0, 0, 3200, 3200);
         this.cameras.main.startFollow(this.player);
-
-        //Création Barre de vie
-        this.healthContainer = this.add.sprite(100, 40, "CadreVie").setScrollFactor(0);
-        this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0);
-        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0);
-        this.healthMask.visible = false;
-        this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
-
-        //Création Inventaire Monnaie
-        this.scoreText = this.add.text(1100, 16, "x" + this.porteMonnaie, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
-        this.add.image(1080, 27, "Monnaie").setScale(3).setScrollFactor(0);
 
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -254,6 +194,7 @@ class RockPlain extends Phaser.Scene {
         //Pickup
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
+        this.physics.add.overlap(this.player, this.statuette, this.gainStatue, null, this);
         this.physics.add.overlap(this.player, this.key, this.keyUnlock, null, this);
 
         //Rocher
@@ -326,16 +267,16 @@ class RockPlain extends Phaser.Scene {
             //Attaque
             if (this.cursors.space.isDown && this.unlock_Sword || this.controller.A && this.unlock_Sword) {
                 if (this.player_facing == "up") {
-                    this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_y");
+                    this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_up");
                 }
                 else if (this.player_facing == "down") {
-                    this.attaque_sword.create(this.player.x, this.player.y + 32, "sword_y");
+                    this.attaque_sword.create(this.player.x, this.player.y + 32, "sword_down");
                 }
                 else if (this.player_facing == "right") {
-                    this.attaque_sword.create(this.player.x + 32, this.player.y, "sword_x");
+                    this.attaque_sword.create(this.player.x + 32, this.player.y, "sword_right");
                 }
                 else if (this.player_facing == "left") {
-                    this.attaque_sword.create(this.player.x - 32, this.player.y, "sword_x");
+                    this.attaque_sword.create(this.player.x - 32, this.player.y, "sword_left");
                 }
                 this.player_block = true;
                 this.player.setVelocityX(0);
@@ -345,16 +286,16 @@ class RockPlain extends Phaser.Scene {
             //Bow
             if (this.cursors.shift.isDown && this.unlock_Bow && this.trigger_shoot == false || this.controller.B && this.unlock_Bow && this.trigger_shoot == false) {
                 if (this.player_facing == "up") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(-200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_up").body.setVelocityY(-200);
                 }
                 else if (this.player_facing == "down") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_down").body.setVelocityY(200);
                 }
                 else if (this.player_facing == "right") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityX(200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_right").body.setVelocityX(200);
                 }
                 else if (this.player_facing == "left") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityX(-200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_left").body.setVelocityX(-200);
                 }
                 this.player_block = true;
                 this.trigger_shoot = true;
@@ -369,25 +310,25 @@ class RockPlain extends Phaser.Scene {
     mob_switch_right(mob) {
         mob.setVelocityX(100);
         mob.setVelocityY(0);
-        mob.anims.play('right_mob')
+        mob.anims.play('right_mob_base')
     }
 
     mob_switch_left(mob) {
         mob.setVelocityX(-100);
         mob.setVelocityY(0);
-        mob.anims.play('left_mob')
+        mob.anims.play('left_mob_base')
     }
 
     mob_switch_up(mob) {
         mob.setVelocityX(0);
         mob.setVelocityY(-100);
-        mob.anims.play('up_mob')
+        mob.anims.play('up_mob_base')
     }
 
     mob_switch_down(mob) {
         mob.setVelocityX(0);
         mob.setVelocityY(100);
-        mob.anims.play('down_mob')
+        mob.anims.play('down_mob_base')
     }
 
     //Kill Mob
@@ -547,6 +488,12 @@ class RockPlain extends Phaser.Scene {
         this.scoreText.setText('x' + this.porteMonnaie);
     }
 
+    gainStatue(player, statuette) {
+        statuette.disableBody(true, true);
+        this.statue += 1;
+        this.countStatue.setText('x' + this.statue);
+    }
+
     //Unlock Power Up
     checkTear() {
         if (this.unlock_Tear == false) {
@@ -567,6 +514,7 @@ class RockPlain extends Phaser.Scene {
         console.log("To Forest");
         this.scene.start("darkForest", {
             porteMonnaie : this.porteMonnaie,
+            statue : this.statue,
             unlock_Sword : this.unlock_Sword,
             unlock_Bow : this.unlock_Bow,
             unlock_Tear : this.unlock_Tear,
@@ -581,6 +529,7 @@ class RockPlain extends Phaser.Scene {
         console.log("To Cave");
         this.scene.start("cave", {
             porteMonnaie : this.porteMonnaie,
+            statue : this.statue,
             unlock_Sword : this.unlock_Sword,
             unlock_Bow : this.unlock_Bow,
             unlock_Tear : this.unlock_Tear,

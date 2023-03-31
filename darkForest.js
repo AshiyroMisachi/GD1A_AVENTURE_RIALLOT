@@ -35,31 +35,7 @@ class DarkForest extends Phaser.Scene {
 
         //Création Mbob
         this.mob = this.physics.add.group();
-        this.anims.create({
-            key: 'left_mob',
-            frames: this.anims.generateFrameNumbers('mob_forest', {start:6,end:7}),
-            frameRate: 2,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'up_mob',
-            frames: this.anims.generateFrameNumbers('mob_forest', {start:2,end:3}),
-            frameRate: 2,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'down_mob',
-            frames: this.anims.generateFrameNumbers('mob_forest', {start:0,end:1}),
-            frameRate: 2,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'right_mob',
-            frames: this.anims.generateFrameNumbers('mob_forest', {start:4,end:5}),
-            frameRate: 2,
-            repeat: -1
-        });
-
+        
         //Placement Décord
         this.add.image(1600, 1600, "sol_forest");
         this.add.image(1600, 1600, "river_forest");
@@ -84,6 +60,7 @@ class DarkForest extends Phaser.Scene {
         );
 
         //Placement Ennemi
+        this.mob = this.physics.add.group();
         this.calque_mob = this.carteForest.getObjectLayer('Ennemi');
         this.calque_mob.objects.forEach(calque_mob => {
             this.mob_create = this.physics.add.sprite(calque_mob.x + 16, calque_mob.y + 16, 'mob_forest').setScale(0.5);
@@ -116,6 +93,13 @@ class DarkForest extends Phaser.Scene {
             this.door.create(1968, 3120, "Door");
         }
         
+        //Placement Statue
+        this.statuette = this.physics.add.staticGroup();
+        this.calque_Statue = this.carteForest.getObjectLayer('Statuette');
+        this.calque_Statue.objects.forEach(calque_Statue => {
+            const POStatue = this.statuette.create(calque_Statue.x + 16, calque_Statue.y + 16, "Statue")
+        });
+
         //Placement Changement Scene
         this.travelToPlain = this.physics.add.staticGroup();
         this.travelToPlain.create(2336, 16, "ForestToPlain");
@@ -180,54 +164,17 @@ class DarkForest extends Phaser.Scene {
         this.add.image(585, 29, "Monnaie").setScale(2).setScrollFactor(0);
         this.countStatue = this.add.text(715, 20, "x" + this.statue, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
         this.add.image(700, 29, "Statue").setScale(1.4).setScrollFactor(0);
+
+        //Création Barre de vie
+        this.healthContainer = this.add.sprite(140, 28, "CadreVie").setScrollFactor(0).setVisible(false);
+        this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask.visible = false;
+        this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
         
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('perso', {start:12,end:15}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'up',
-            frames: this.anims.generateFrameNumbers('perso', {start:4,end:7}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'down',
-            frames: this.anims.generateFrameNumbers('perso', {start:0,end:3}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('perso', {start:8,end:11}),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'left_stop',
-            frames: [ { key: 'perso', frame: 12 } ],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'right_stop',
-            frames: [ { key: 'perso', frame: 8 } ],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'up_stop',
-            frames: [ { key: 'perso', frame: 4 } ],
-            frameRate: 20
-        });
-        this.anims.create({
-            key: 'down_stop',
-            frames: [ { key: 'perso', frame: 0 } ],
-            frameRate: 20
-        });
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
@@ -241,13 +188,6 @@ class DarkForest extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 3200, 3200);
         this.cameras.main.setBounds(0, 0, 3200, 3200);
         this.cameras.main.startFollow(this.player);
-
-        //Création Barre de vie
-        this.healthContainer = this.add.sprite(140, 28, "CadreVie").setScrollFactor(0).setVisible(false);
-        this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0).setScale(0.5);
-        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
-        this.healthMask.visible = false;
-        this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
 
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -267,6 +207,7 @@ class DarkForest extends Phaser.Scene {
         //Pickup
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
         this.physics.add.overlap(this.player, this.money, this.gainMoney, null, this);
+        this.physics.add.overlap(this.player, this.statuette, this.gainStatue, null, this);
         this.physics.add.overlap(this.player, this.sword, this.swordUnlock, null, this);
         this.physics.add.overlap(this.player, this.bow, this.bowUnlock, null, this);
 
@@ -536,6 +477,12 @@ class DarkForest extends Phaser.Scene {
         this.scoreText.setText('x' + this.porteMonnaie);
     }
 
+    gainStatue(player, statuette) {
+        statuette.disableBody(true, true);
+        this.statue += 1;
+        this.countStatue.setText('x' + this.statue);
+    }
+
     //Unlock Power Up
     swordUnlock(player, sword) {
         sword.disableBody(true, true);
@@ -570,6 +517,7 @@ class DarkForest extends Phaser.Scene {
         console.log("To plain");
         this.scene.start("rockPlain", {
             porteMonnaie : this.porteMonnaie,
+            statue : this.statue,
             unlock_Sword : this.unlock_Sword,
             unlock_Bow : this.unlock_Bow,
             unlock_Tear : this.unlock_Tear,
@@ -584,6 +532,7 @@ class DarkForest extends Phaser.Scene {
         console.log("To Temple");
         this.scene.start("waterTemple", {
             porteMonnaie : this.porteMonnaie,
+            statue : this.statue,
             unlock_Sword : this.unlock_Sword,
             unlock_Bow : this.unlock_Bow,
             unlock_Tear : this.unlock_Tear,
