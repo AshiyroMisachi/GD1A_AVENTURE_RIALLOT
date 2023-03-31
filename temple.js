@@ -5,7 +5,7 @@ class WaterTemple extends Phaser.Scene {
 
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
-        this.statue = 12;
+        this.statue = data.statue;
         this.unlock_Sword = data.unlock_Sword;
         this.unlock_Bow = data.unlock_Bow;
         this.unlock_Tear = data.unlock_Tear;
