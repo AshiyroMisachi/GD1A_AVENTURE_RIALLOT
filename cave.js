@@ -85,7 +85,7 @@ class Cave extends Phaser.Scene {
 
         //Placement Statue
         this.statuette = this.physics.add.staticGroup();
-        this.calque_Statue = this.carteForest.getObjectLayer('Statuette');
+        this.calque_Statue = this.carteCave.getObjectLayer('Statuette');
         this.calque_Statue.objects.forEach(calque_Statue => {
             const POStatue = this.statuette.create(calque_Statue.x + 16, calque_Statue.y + 16, "Statue")
         });
