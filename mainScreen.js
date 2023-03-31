@@ -16,6 +16,8 @@ class MainScreen extends Phaser.Scene {
             { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet('mob_forest', 'assets/mob_forest.png',
             { frameWidth: 57, frameHeight: 64 });
+        this.load.spritesheet('boss', 'assets/Boss.png',
+            { frameWidth: 64, frameHeight: 64});
 
         //Preload Asset Tiled
         this.load.image("Phaser_tuilesdejeu", "assets/Tiled/tileset.png");
@@ -66,6 +68,13 @@ class MainScreen extends Phaser.Scene {
     create() {
         this.gameButton = this.add.image(400, 200, "Button_Game").setInteractive();
         this.gameButton.on("pointerdown", this.launchGame, this);
+
+        //Animation Boss
+        this.anims.create({
+            key: 'boss_walk',
+            frames: [{ key: 'boss', frame: 0 }],
+            frameRate: 20
+        });
 
         //Animation Mob Forest
         this.anims.create({

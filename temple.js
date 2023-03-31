@@ -5,7 +5,7 @@ class WaterTemple extends Phaser.Scene {
 
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
-        this.statue = data.statue;
+        this.statue = 12;
         this.unlock_Sword = data.unlock_Sword;
         this.unlock_Bow = data.unlock_Bow;
         this.unlock_Tear = data.unlock_Tear;
@@ -18,6 +18,7 @@ class WaterTemple extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.boss_health = 100;
         this.controller = false;
         this.player_block = false;
         this.player_beHit = false;
@@ -78,6 +79,10 @@ class WaterTemple extends Phaser.Scene {
         this.calque_Rock.objects.forEach(calque_Rock => {
             const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock_2").setPushable(false);
         });
+        this.door = this.physics.add.group();
+        if (this.statue < 12) {
+            this.door.create(1424, 176, "Door").setPushable(false);
+        }
 
         //Placement Statue
         this.statuette = this.physics.add.staticGroup();
@@ -147,6 +152,9 @@ class WaterTemple extends Phaser.Scene {
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
+
+        //Création Boss
+        this.boss = this.physics.add.sprite(1360, 1856, 'boss').setVelocityX(100).setPushable(false);
         
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
@@ -174,6 +182,7 @@ class WaterTemple extends Phaser.Scene {
         this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
         this.physics.add.collider(this.player, this.door, this.opendDoor, null, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
+        this.physics.add.overlap(this.player, this.boss, this.perteVie, this.getHit, this);
 
         //Pickup
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
@@ -197,8 +206,12 @@ class WaterTemple extends Phaser.Scene {
         this.physics.add.collider(this.mob, this.calque_mob_switch_up, this.mob_switch_up, null, this);
         this.physics.add.collider(this.mob, this.calque_mob_switch_left, this.mob_switch_left, null, this);
         this.physics.add.collider(this.mob, this.calque_mob_switch_right, this.mob_switch_right, null, this);
+        this.physics.add.collider(this.boss, this.calque_mob_switch_left, this.boss_switch_left, null, this);
+        this.physics.add.collider(this.boss, this.calque_mob_switch_right, this.boss_switch_right, null, this);
         this.physics.add.collider(this.mob, this.attaque_sword, this.kill_mob, null, this);
         this.physics.add.collider(this.mob, this.proj_Bow, this.kill_mob_bow, null, this);
+        this.physics.add.collider(this.boss, this.attaque_sword, this.perteVie_Boss_Sword, null, this);
+        this.physics.add.collider(this.boss, this.proj_Bow, this.perteVie_Boss_proj, null, this);
     }
 
     update() {
@@ -311,6 +324,14 @@ class WaterTemple extends Phaser.Scene {
         mob.anims.play('down_mob_base')
     }
 
+    boss_switch_right(mob) {
+        mob.setVelocityX(100);
+    }
+
+    boss_switch_left(mob) {
+        mob.setVelocityX(-100);
+    }
+
     //Kill Mob
     kill_mob(mob) {
         mob.disableBody(true, true)
@@ -322,6 +343,22 @@ class WaterTemple extends Phaser.Scene {
         projBow.disableBody(true, true)
         this.trigger_shoot = false;
         this.lootMob(mob);
+    }
+
+    perteVie_Boss_Sword(boss, sword){
+        sword.destroy();
+        this.boss_health -= 20;
+        if (this.boss_health <= 0){
+            boss.destroy();
+        }
+    }
+
+    perteVie_Boss_proj(boss, proj){
+        proj.destroy();
+        this.boss_health -= 10;
+        if (this.boss_health <= 0){
+            boss.destroy();
+        }
     }
 
     //Loot Mob
