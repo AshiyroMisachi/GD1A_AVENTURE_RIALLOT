@@ -38,6 +38,7 @@ class MainScreen extends Phaser.Scene {
 
         //Preload Loot
         this.load.image("Monnaie", "assets/Monnaie.png");
+        this.load.image("Statue", "assets/statue.png");
         this.load.image("Soin", "assets/Soin.png");
         this.load.image("Bow", "assets/Bow.png");
         this.load.image("Tear", "assets/Tear.png");
@@ -73,6 +74,7 @@ class MainScreen extends Phaser.Scene {
         console.log("Launch Game");
         this.scene.start('darkForest', {
             porteMonnaie : 0,
+            statue : 0,
             unlock_Sword : false,
             unlock_Bow : false,
             unlock_Tear : false,

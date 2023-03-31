@@ -7,10 +7,11 @@ class DarkForest extends Phaser.Scene {
 
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
-        this.unlock_Sword = data.unlock_Sword;
-        this.unlock_Bow = data.unlock_Bow;
-        this.unlock_Tear = data.unlock_Tear;
-        this.unlock_Key = data.unlock_Key;
+        this.statue = data.statue;
+        this.unlock_Sword = true;
+        this.unlock_Bow = true;
+        this.unlock_Tear = true;
+        this.unlock_Key = true;
         this.health = data.health;
         this.spawnX = data.spawnX;
         this.spawnY = data.spawnY;
@@ -143,9 +144,6 @@ class DarkForest extends Phaser.Scene {
         this.calque_mob_switch_right.setVisible(false);
         this.calque_mob_switch_left.setVisible(false);
 
-        //Inventaire
-        this.add.image(0, 0, "BarreInventaire").setScrollFactor(0);
-
         //Placement PowerUp
         this.sword = this.physics.add.group();
         if (this.unlock_Sword == false){
@@ -158,19 +156,25 @@ class DarkForest extends Phaser.Scene {
         }
 
         //Inventaire
-        this.add.image(0, 0, "BarreInventaire").setScrollFactor(0);
+        this.add.image(400, 28, "BarreInventaire").setScrollFactor(0).setScale(0.5);
         if (this.unlock_Sword) {
-            this.add.image(900, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+            this.add.image(330, 28, 'sword_y').setScale(1.25).setScrollFactor(0);
         }
         if (this.unlock_Bow) {
-            this.add.image(900, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+            this.add.image(385, 28, 'Bow').setScale(1.25).setScrollFactor(0);
         }
         if (this.unlock_Tear) {
-            this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+            this.add.image(443, 28, 'Tear').setScale(2).setScrollFactor(0);
         }
         if (this.unlock_Key) {
-            this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+            this.add.image(500, 28, 'Key').setScale(1.75).setScrollFactor(0);
         }
+
+        //Création Inventaire Monnaie
+        this.scoreText = this.add.text(605, 20, "x" + this.porteMonnaie, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+        this.add.image(585, 29, "Monnaie").setScale(2).setScrollFactor(0);
+        this.countStatue = this.add.text(715, 20, "x" + this.statue, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+        this.add.image(700, 29, "Statue").setScale(1.4).setScrollFactor(0);
         
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
@@ -234,15 +238,11 @@ class DarkForest extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
 
         //Création Barre de vie
-        this.healthContainer = this.add.sprite(100, 40, "CadreVie").setScrollFactor(0);
-        this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0);
-        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0);
+        this.healthContainer = this.add.sprite(140, 28, "CadreVie").setScrollFactor(0).setVisible(false);
+        this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
         this.healthMask.visible = false;
         this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
-
-        //Création Inventaire Monnaie
-        this.scoreText = this.add.text(1100, 16, "x" + this.porteMonnaie, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
-        this.add.image(1080, 27, "Monnaie").setScale(3).setScrollFactor(0);
 
         //Récupération Input
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -505,9 +505,9 @@ class DarkForest extends Phaser.Scene {
             player.setVelocityY(400);
         }
         this.pinvisible();
-        this.healthMask.x -= 10;
+        this.healthMask.x -= 24.9;
         this.health -= 10;
-        if (this.health < 0) {
+        if (this.health <= 0) {
             this.player_block = true;
             player.setTint(0xff0000);
             this.physics.pause();
