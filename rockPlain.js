@@ -18,6 +18,7 @@ class RockPlain extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.gameOver = false;
         this.controller = false;
         this.player_block = false;
         this.player_beHit = false;
@@ -222,6 +223,7 @@ class RockPlain extends Phaser.Scene {
     }
 
     update() {
+        if (this.gameOver) { return }
         if (this.player_block == false) {
             //Mouvement
             if (this.cursors.up.isDown || this.controller.up) {
@@ -465,7 +467,7 @@ class RockPlain extends Phaser.Scene {
         this.healthMask.x -= 10;
         this.health -= 10;
         if (this.health < 0) {
-            this.player_block = true;
+            this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();
         }
@@ -507,7 +509,7 @@ class RockPlain extends Phaser.Scene {
     keyUnlock(player, key) {
         key.disableBody(true, true);
         this.unlock_Key = true;
-        this.add.image(850, 50, 'Key').setScale(2.5).setScrollFactor(0);
+        this.add.image(500, 28, 'Key').setScale(1.75).setScrollFactor(0);
     }
     //Fonction Changement de scene
     toForest() {

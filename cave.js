@@ -18,6 +18,7 @@ class Cave extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.gameOver = false;
         this.controller = false;
         this.player_block = false;
         this.player_beHit = false;
@@ -208,6 +209,7 @@ class Cave extends Phaser.Scene {
     }
 
     update() {
+        if (this.gameOver) { return }
         if (this.player_block == false) {
             //Mouvement
             if (this.cursors.up.isDown || this.controller.up) {
@@ -445,7 +447,7 @@ class Cave extends Phaser.Scene {
         this.healthMask.x -= 10;
         this.health -= 10;
         if (this.health < 0) {
-            this.player_block = true;
+            this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();
         }
@@ -477,7 +479,7 @@ class Cave extends Phaser.Scene {
     //Unlock Power Up
     tearUnlock(player, tear) {
         tear.disableBody(true, true);
-        this.add.image(900, 50, 'Tear').setScale(2.5).setScrollFactor(0);
+        this.add.image(443, 28, 'Tear').setScale(2).setScrollFactor(0);
         this.unlock_Tear = true;
     }
 

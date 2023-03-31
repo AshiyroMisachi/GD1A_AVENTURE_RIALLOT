@@ -7,11 +7,11 @@ class DarkForest extends Phaser.Scene {
 
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
-        this.statue = data.statue;
-        this.unlock_Sword = data.unlock_Sword;
-        this.unlock_Bow = data.unlock_Bow;
-        this.unlock_Tear = data.unlock_Tear;
-        this.unlock_Key = data.unlock_Key;
+        this.statue = 12;
+        this.unlock_Sword = true;
+        this.unlock_Bow = true;
+        this.unlock_Tear = true;
+        this.unlock_Key = true;
         this.health = data.health;
         this.spawnX = data.spawnX;
         this.spawnY = data.spawnY;
@@ -20,6 +20,7 @@ class DarkForest extends Phaser.Scene {
     preload() {}
 
     create() {
+        this.gameOver = false;
         this.controller = false;
         this.player_block = false;
         this.player_beHit = false;
@@ -136,7 +137,7 @@ class DarkForest extends Phaser.Scene {
         //Placement PowerUp
         this.sword = this.physics.add.group();
         if (this.unlock_Sword == false){
-            this.sword.create(1985, 2076, "sword_y");
+            this.sword.create(1985, 2076, "sword_up");
         }
 
         this.bow = this.physics.add.group();
@@ -230,6 +231,7 @@ class DarkForest extends Phaser.Scene {
     }
 
     update() {
+        if (this.gameOver) { return }
         if (this.player_block == false) {
             //Mouvement
             if (this.cursors.up.isDown || this.controller.up) {
@@ -454,7 +456,7 @@ class DarkForest extends Phaser.Scene {
         this.healthMask.x -= 24.9;
         this.health -= 10;
         if (this.health <= 0) {
-            this.player_block = true;
+            this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();
         }
@@ -486,13 +488,13 @@ class DarkForest extends Phaser.Scene {
     //Unlock Power Up
     swordUnlock(player, sword) {
         sword.disableBody(true, true);
-        this.add.image(1000, 50, 'sword_y').setScale(2.5).setScrollFactor(0);
+        this.add.image(328, 28, 'sword_up').setScrollFactor(0);
         this.unlock_Sword = true;
     }
 
     bowUnlock(player, bow) {
         bow.disableBody(true, true);
-        this.add.image(950, 50, 'Bow').setScale(2.5).setScrollFactor(0);
+        this.add.image(385, 28, 'Bow').setScale(1.25).setScrollFactor(0);
         this.unlock_Bow = true;
     }
 

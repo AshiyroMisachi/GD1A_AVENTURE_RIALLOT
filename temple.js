@@ -15,9 +15,11 @@ class WaterTemple extends Phaser.Scene {
         this.spawnY = data.spawnY;
     }
 
-    preload() {}
+    preload() { }
 
     create() {
+        this.gameWin = false;
+        this.gameOver = false;
         this.boss_health = 100;
         this.controller = false;
         this.player_block = false;
@@ -26,6 +28,13 @@ class WaterTemple extends Phaser.Scene {
         this.trigger_cleanSword = false;
         this.trigger_shoot = false;
         this.player_facing = "up";
+
+        this.bossAlive = true;
+        this.attackBoss = true;
+        this.bossAttackCount = 0;
+        this.bossNotAttack = true;
+        this.randomAttackBoss = 0;
+        this.projBoss = this.physics.add.group();
 
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
@@ -155,7 +164,7 @@ class WaterTemple extends Phaser.Scene {
 
         //Création Boss
         this.boss = this.physics.add.sprite(1360, 1856, 'boss').setVelocityX(100).setPushable(false);
-        
+
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
         this.river.setCollisionByProperty({ estSolide: true });
@@ -183,6 +192,7 @@ class WaterTemple extends Phaser.Scene {
         this.physics.add.collider(this.player, this.door, this.opendDoor, null, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
         this.physics.add.overlap(this.player, this.boss, this.perteVie, this.getHit, this);
+        this.physics.add.overlap(this.player, this.projBoss, this.perteVie, this.getHit, this);
 
         //Pickup
         this.physics.add.overlap(this.player, this.heal, this.gainVie, null, this);
@@ -201,6 +211,9 @@ class WaterTemple extends Phaser.Scene {
         this.physics.add.collider(this.proj_Bow, this.bordure, this.clean_proj, null, this);
         this.physics.add.collider(this.proj_Bow, this.rock, this.moveRock, null, this);
 
+        this.physics.add.collider(this.projBoss, this.bordure, this.clean_proj, null, this);
+        this.physics.add.collider(this.projBoss, this.rock, this.clean_proj, null, this);
+
         //Ennemi
         this.physics.add.collider(this.mob, this.calque_mob_switch_down, this.mob_switch_down, null, this);
         this.physics.add.collider(this.mob, this.calque_mob_switch_up, this.mob_switch_up, null, this);
@@ -210,11 +223,13 @@ class WaterTemple extends Phaser.Scene {
         this.physics.add.collider(this.boss, this.calque_mob_switch_right, this.boss_switch_right, null, this);
         this.physics.add.collider(this.mob, this.attaque_sword, this.kill_mob, null, this);
         this.physics.add.collider(this.mob, this.proj_Bow, this.kill_mob_bow, null, this);
-        this.physics.add.collider(this.boss, this.attaque_sword, this.perteVie_Boss_Sword, null, this);
         this.physics.add.collider(this.boss, this.proj_Bow, this.perteVie_Boss_proj, null, this);
     }
 
     update() {
+        if (this.gameOver){ return }
+        if (this.gameWin){ return }
+
         if (this.player_block == false) {
             //Mouvement
             if (this.cursors.up.isDown || this.controller.up) {
@@ -242,16 +257,16 @@ class WaterTemple extends Phaser.Scene {
                 this.player_facing = "left";
             }
             else {
-                if (this.player_facing == "left"){
+                if (this.player_facing == "left") {
                     this.player.anims.play('left_stop');
                 }
-                else if (this.player_facing == "right"){
+                else if (this.player_facing == "right") {
                     this.player.anims.play('right_stop');
                 }
-                else if (this.player_facing == "up"){
+                else if (this.player_facing == "up") {
                     this.player.anims.play('up_stop');
                 }
-                else if (this.player_facing == "down"){
+                else if (this.player_facing == "down") {
                     this.player.anims.play('down_stop');
                 }
                 this.player.setVelocityY(0);
@@ -295,6 +310,71 @@ class WaterTemple extends Phaser.Scene {
                 this.player.setVelocityX(0);
                 this.player.setVelocityY(0);
                 this.time.delayedCall(1000, this.delock_shoot, [], this);
+            }
+
+            //Attaque Boss
+            if (this.bossAlive) {
+                if (this.attackBoss) {
+                    if (this.bossNotAttack) {
+                        this.randomAttackBoss = Math.floor(Math.random() * (4 - 1)) + 1;
+                        this.bossAttackCount = 0;
+                        this.bossNotAttack = false;
+                        console.log(this.randomAttackBoss);
+                    }
+                    else {
+                        if (this.randomAttackBoss == 1) {
+                            //3 coup rapide
+                            if (this.bossAttackCount < 3) {
+                                this.bossAttackCount += 1;
+                                this.attackBoss = false;
+                                this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-100);
+                                if (this.bossAttackCount == 3) {
+                                    this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
+                                }
+                                else {
+                                    this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
+                                }
+                            }
+                            else {
+                                this.bossNotAttack = true;
+                            }
+                        }
+                        else if (this.randomAttackBoss == 2) {
+                            //2 coup tres rapide
+                            if (this.bossAttackCount < 2) {
+                                this.bossAttackCount += 1;
+                                this.attackBoss = false;
+                                this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-150);
+                                if (this.bossAttackCount == 2) {
+                                    this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
+                                }
+                                else {
+                                    this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
+                                }
+                            }
+                            else {
+                                this.bossNotAttack = true;
+                            }
+                        }
+                        else if (this.randomAttackBoss == 3) {
+                            //4 coup lent
+                            if (this.bossAttackCount < 4) {
+                                this.bossAttackCount += 1;
+                                this.attackBoss = false;
+                                this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-30);
+                                if (this.bossAttackCount == 4) {
+                                    this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
+                                }
+                                else {
+                                    this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
+                                }
+                            }
+                            else {
+                                this.bossNotAttack = true;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -345,19 +425,13 @@ class WaterTemple extends Phaser.Scene {
         this.lootMob(mob);
     }
 
-    perteVie_Boss_Sword(boss, sword){
-        sword.destroy();
-        this.boss_health -= 20;
-        if (this.boss_health <= 0){
-            boss.destroy();
-        }
-    }
-
-    perteVie_Boss_proj(boss, proj){
+    perteVie_Boss_proj(boss, proj) {
         proj.destroy();
         this.boss_health -= 10;
-        if (this.boss_health <= 0){
+        if (this.boss_health <= 0) {
             boss.destroy();
+            this.bossAlive = false;
+            this.gameWin = true;
         }
     }
 
@@ -375,16 +449,16 @@ class WaterTemple extends Phaser.Scene {
 
     //Activation / Destruction environnement
     moveRock(proj, rock) {
-        if (proj.body.touching.up){
+        if (proj.body.touching.up) {
             rock.setVelocityY(-60);
         }
-        else if (proj.body.touching.down){
+        else if (proj.body.touching.down) {
             rock.setVelocityY(60);
         }
-        else if (proj.body.touching.right){
+        else if (proj.body.touching.right) {
             rock.setVelocityX(60);
         }
-        else if (proj.body.touching.left){
+        else if (proj.body.touching.left) {
             rock.setVelocityX(-60);
         }
         this.time.delayedCall(1000, (rock) => {
@@ -395,11 +469,11 @@ class WaterTemple extends Phaser.Scene {
 
     //Clean Attaque
     clean_attaque(attaque) {
-        attaque.disableBody(true, true);
+        attaque.destroy();
     }
 
     clean_proj(proj) {
-        proj.disableBody(true, true);
+        proj.destroy();
     }
 
     if_clean_sword() {
@@ -476,7 +550,7 @@ class WaterTemple extends Phaser.Scene {
         this.healthMask.x -= 10;
         this.health -= 10;
         if (this.health < 0) {
-            this.player_block = true;
+            this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();
         }
@@ -519,15 +593,15 @@ class WaterTemple extends Phaser.Scene {
     toForest() {
         console.log("To Forest");
         this.scene.start("darkForest", {
-            porteMonnaie : this.porteMonnaie,
-            statue : this.statue,
-            unlock_Sword : this.unlock_Sword,
-            unlock_Bow : this.unlock_Bow,
-            unlock_Tear : this.unlock_Tear,
-            unlock_Key : this.unlock_Key,
-            health : this.health,
-            spawnX : 1967,
-            spawnY : 3116
+            porteMonnaie: this.porteMonnaie,
+            statue: this.statue,
+            unlock_Sword: this.unlock_Sword,
+            unlock_Bow: this.unlock_Bow,
+            unlock_Tear: this.unlock_Tear,
+            unlock_Key: this.unlock_Key,
+            health: this.health,
+            spawnX: 1967,
+            spawnY: 3116
         });
     }
 
