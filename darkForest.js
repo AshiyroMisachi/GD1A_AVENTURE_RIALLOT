@@ -60,6 +60,10 @@ class DarkForest extends Phaser.Scene {
             repeat: -1
         });
 
+        //Placement Décord
+        this.add.image(1600, 1600, "sol_forest");
+        this.add.image(1600, 1600, "river_forest");
+
         //Load Tiled
         this.carteForest = this.add.tilemap("darkForest");
         this.tileset = this.carteForest.addTilesetImage(
@@ -144,6 +148,7 @@ class DarkForest extends Phaser.Scene {
         this.calque_mob_switch_right.setVisible(false);
         this.calque_mob_switch_left.setVisible(false);
 
+
         //Placement PowerUp
         this.sword = this.physics.add.group();
         if (this.unlock_Sword == false){
@@ -158,7 +163,7 @@ class DarkForest extends Phaser.Scene {
         //Inventaire
         this.add.image(400, 28, "BarreInventaire").setScrollFactor(0).setScale(0.5);
         if (this.unlock_Sword) {
-            this.add.image(330, 28, 'sword_y').setScale(1.25).setScrollFactor(0);
+            this.add.image(328, 28, 'sword_up').setScrollFactor(0);
         }
         if (this.unlock_Bow) {
             this.add.image(385, 28, 'Bow').setScale(1.25).setScrollFactor(0);
@@ -329,16 +334,16 @@ class DarkForest extends Phaser.Scene {
             //Attaque
             if (this.cursors.space.isDown && this.unlock_Sword || this.controller.A && this.unlock_Sword) {
                 if (this.player_facing == "up") {
-                    this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_y");
+                    this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_up");
                 }
                 else if (this.player_facing == "down") {
-                    this.attaque_sword.create(this.player.x, this.player.y + 32, "sword_y");
+                    this.attaque_sword.create(this.player.x, this.player.y + 32, "sword_down");
                 }
                 else if (this.player_facing == "right") {
-                    this.attaque_sword.create(this.player.x + 32, this.player.y, "sword_x");
+                    this.attaque_sword.create(this.player.x + 32, this.player.y, "sword_right");
                 }
                 else if (this.player_facing == "left") {
-                    this.attaque_sword.create(this.player.x - 32, this.player.y, "sword_x");
+                    this.attaque_sword.create(this.player.x - 32, this.player.y, "sword_left");
                 }
                 this.player_block = true;
                 this.player.setVelocityX(0);
@@ -348,16 +353,16 @@ class DarkForest extends Phaser.Scene {
             //Bow
             if (this.cursors.shift.isDown && this.unlock_Bow && this.trigger_shoot == false || this.controller.B && this.unlock_Bow && this.trigger_shoot == false) {
                 if (this.player_facing == "up") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(-200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_up").body.setVelocityY(-200);
                 }
                 else if (this.player_facing == "down") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityY(200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_down").body.setVelocityY(200);
                 }
                 else if (this.player_facing == "right") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityX(200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_right").body.setVelocityX(200);
                 }
                 else if (this.player_facing == "left") {
-                    this.proj_Bow.create(this.player.x, this.player.y, "projBow").body.setVelocityX(-200);
+                    this.proj_Bow.create(this.player.x, this.player.y, "projBow_left").body.setVelocityX(-200);
                 }
                 this.player_block = true;
                 this.trigger_shoot = true;
@@ -521,7 +526,7 @@ class DarkForest extends Phaser.Scene {
         heal.disableBody(true, true);
         if (this.health < 100) {
             this.health += 10
-            this.healthMask.x += 10;
+            this.healthMask.x += 24.9;
         }
     }
 

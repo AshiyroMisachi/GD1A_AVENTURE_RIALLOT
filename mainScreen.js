@@ -5,7 +5,6 @@ class MainScreen extends Phaser.Scene {
 
     preload() {
         //Bouton de lancement
-        this.load.image("Button_Test", "assets/launchTest.png");
         this.load.image("Button_Game", "assets/launchGame.png");
 
         //Sprite Perso
@@ -27,9 +26,14 @@ class MainScreen extends Phaser.Scene {
         this.load.tilemapTiledJSON("waterTemple", "assets/Tiled/Temple.json");
 
         //Preload Attaque
-        this.load.image("sword_y", "assets/attaque_joueur_y.png");
-        this.load.image("sword_x", "assets/attaque_joueur_x.png");
-        this.load.image("projBow", "assets/projBow.png");
+        this.load.image("sword_up", "assets/attaque_joueur_up.png");
+        this.load.image("sword_down", "assets/attaque_joueur_down.png");
+        this.load.image("sword_left", "assets/attaque_joueur_left.png");
+        this.load.image("sword_right", "assets/attaque_joueur_right.png");
+        this.load.image("projBow_up", "assets/projBow_up.png");
+        this.load.image("projBow_down", "assets/projBow_down.png");
+        this.load.image("projBow_left", "assets/projBow_left.png");
+        this.load.image("projBow_right", "assets/projBow_right.png");
 
         //Preload Inventaire
         this.load.image("BarreInventaire", "assets/BarreInventaire.png");
@@ -45,6 +49,8 @@ class MainScreen extends Phaser.Scene {
         this.load.image("Key", "assets/Cle.png");
 
         //Preload Environnement
+        this.load.image("sol_forest", "assets/ground_forest.png");
+        this.load.image("river_forest", "assets/river_forest.png");
         this.load.image("ForestToPlain", "assets/ForestToPlain.png");
         this.load.image("ForestToTemple", "assets/ForestToTemple.png");
         this.load.image("RockToForest", "assets/ForestToPlain.png");
@@ -63,11 +69,6 @@ class MainScreen extends Phaser.Scene {
     }
 
     update() {
-    }
-
-    lauchTest() {
-        console.log("Launch Test");
-        this.scene.start('MondeTest');
     }
 
     launchGame(){
