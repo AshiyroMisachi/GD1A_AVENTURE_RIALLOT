@@ -60,6 +60,16 @@ class DarkForest extends Phaser.Scene {
             this.tileset
         );
 
+        this.pont_1 = this.carteForest.createLayer(
+            "Pont_1",
+            this.tileset
+        );
+
+        this.pont_2 = this.carteForest.createLayer(
+            "Pont_2",
+            this.tileset
+        );
+
         //Placement Ennemi
         this.mob = this.physics.add.group();
         this.calque_mob = this.carteForest.getObjectLayer('Ennemi');
@@ -200,6 +210,7 @@ class DarkForest extends Phaser.Scene {
         //Création Collision
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
+        this.physics.add.collider(this.player, this.pont_1);
         this.physics.add.collider(this.player, this.rock);
         this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
         this.physics.add.collider(this.player, this.door, this.opendDoor, null, this);
