@@ -7,11 +7,11 @@ class DarkForest extends Phaser.Scene {
 
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
-        this.statue = 12;
-        this.unlock_Sword = true;
-        this.unlock_Bow = true;
-        this.unlock_Tear = true;
-        this.unlock_Key = true;
+        this.statue = data.statue;
+        this.unlock_Sword = data.unlock_Sword;
+        this.unlock_Bow = data.unlock_Bow;
+        this.unlock_Tear = data.unlock_Tear;
+        this.unlock_Key = data.unlock_Key;
         this.health = data.health;
         this.spawnX = data.spawnX;
         this.spawnY = data.spawnY;
@@ -189,6 +189,7 @@ class DarkForest extends Phaser.Scene {
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
+        this.pont_1.setCollisionByProperty({ estSolide: true });
         this.river.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_down.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_up.setCollisionByProperty({ estSolide: true });
