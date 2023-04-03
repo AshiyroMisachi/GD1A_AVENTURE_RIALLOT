@@ -7,16 +7,32 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
-        "DarkForest.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 2,
+        "Cave.tmx": {
+            "scale": 0.268375,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 2047.9999999999998,
-                "y": 1845.3333333333333
+                "x": 1602.2356776897998,
+                "y": 1602.2356776897998
+            }
+        },
+        "DarkForest.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": 1336,
+                "y": 1756
             }
         },
         "DarkForest.tmx#Tileset_Final": {
-            "scaleInDock": 1
+            "scaleInDock": 3
+        },
+        "RockPlain.tmx": {
+            "scale": 0.268375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1602.2356776897998,
+                "y": 1602.2356776897998
+            }
         },
         "Temple.tmx": {
             "scale": 1,
@@ -38,12 +54,16 @@
     "map.lastUsedExportFilter": "Tous les Fichiers (*)",
     "openFiles": [
         "Temple.tmx",
-        "DarkForest.tmx"
+        "DarkForest.tmx",
+        "RockPlain.tmx",
+        "Cave.tmx"
     ],
     "project": "",
     "property.type": "bool",
     "recentFiles": [
         "Temple.tmx",
+        "Cave.tmx",
+        "RockPlain.tmx",
         "DarkForest.tmx"
     ]
 }

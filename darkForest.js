@@ -3,6 +3,7 @@
 class DarkForest extends Phaser.Scene {
     constructor() {
         super("darkForest");
+        this.start = true;
     }
 
     init(data) {
@@ -179,7 +180,7 @@ class DarkForest extends Phaser.Scene {
         //Création Barre de vie
         this.healthContainer = this.add.sprite(140, 28, "CadreVie").setScrollFactor(0).setVisible(false);
         this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0).setScale(0.5);
-        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask = this.add.sprite(this.healthBar.x - (498 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
         this.healthMask.visible = false;
         this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
         
@@ -188,8 +189,12 @@ class DarkForest extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         //Création Texte Explicatif
-        this.explicationText = this.add.text(100, 112, "Vous vous réveillez dans une sombre clairière au bord d'un lac...", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
-        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        if (this.start) {
+            this.explicationText = this.add.text(100, 112, "Vous vous réveillez dans une sombre clairière au bord d'un lac...", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.statue = false;
+        }
+        
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
@@ -373,7 +378,6 @@ class DarkForest extends Phaser.Scene {
     //Loot Mob
     lootMob(mob) {
         this.loot = Math.floor(Math.random() * (4 - 1)) + 1;
-        console.log(this.loot);
         if (this.loot == 1) {
             this.heal.create(mob.x, mob.y, "Soin");
         }
@@ -470,7 +474,7 @@ class DarkForest extends Phaser.Scene {
         }
         this.pinvisible();
         this.healthMask.x -= 24.9;
-        this.health -= 10;
+        this.health -= 24.9;
         if (this.health <= 0) {
             this.explicationText.setText("You died.");
             this.gameOver = true;
@@ -484,8 +488,8 @@ class DarkForest extends Phaser.Scene {
 
     gainVie(player, heal) {
         heal.disableBody(true, true);
-        if (this.health < 100) {
-            this.health += 10
+        if (this.health < 498) {
+            this.health += 24.9
             this.healthMask.x += 24.9;
         }
     }

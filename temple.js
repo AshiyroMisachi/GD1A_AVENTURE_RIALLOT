@@ -154,7 +154,7 @@ class WaterTemple extends Phaser.Scene {
         //Création Barre de vie
         this.healthContainer = this.add.sprite(140, 28, "CadreVie").setScrollFactor(0).setVisible(false);
         this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0).setScale(0.5);
-        this.healthMask = this.add.sprite(this.healthBar.x - (100 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask = this.add.sprite(this.healthBar.x - (498 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
         this.healthMask.visible = false;
         this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
 
@@ -557,8 +557,8 @@ class WaterTemple extends Phaser.Scene {
             player.setVelocityY(400);
         }
         this.pinvisible();
-        this.healthMask.x -= 10;
-        this.health -= 10;
+        this.healthMask.x -= 24.9;
+        this.health -= 24.9;
         if (this.health < 0) {
             this.explicationText.setText("You died.");
             this.gameOver = true;
@@ -572,9 +572,9 @@ class WaterTemple extends Phaser.Scene {
 
     gainVie(player, heal) {
         heal.disableBody(true, true);
-        if (this.health < 100) {
-            this.health += 10
-            this.healthMask.x += 10;
+        if (this.health < 498) {
+            this.health += 24.9;
+            this.healthMask.x += 24.9;
         }
     }
 
