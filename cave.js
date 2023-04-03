@@ -155,6 +155,9 @@ class Cave extends Phaser.Scene {
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
 
+        //Création Texte Explicatif
+        this.explicationText = this.add.text(100, 112, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
         this.river.setCollisionByProperty({ estSolide: true });
@@ -447,6 +450,7 @@ class Cave extends Phaser.Scene {
         this.healthMask.x -= 10;
         this.health -= 10;
         if (this.health < 0) {
+            this.explicationText.setText("You died.");
             this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();
@@ -474,6 +478,16 @@ class Cave extends Phaser.Scene {
         statuette.disableBody(true, true);
         this.statue += 1;
         this.countStatue.setText('x' + this.statue);
+        if (this.statue == 1) {
+            this.explicationText.setVisible(true);
+            this.explicationText.setText('This statue give off a weird feeling')
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        }
+        else if (this.statue == 12) {
+            this.explicationText.setVisible(true);
+            this.explicationText.setText('You heard a big sound from the lake in the forest')
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        }
     }
 
     //Unlock Power Up
@@ -481,6 +495,9 @@ class Cave extends Phaser.Scene {
         tear.disableBody(true, true);
         this.add.image(443, 28, 'Tear').setScale(2).setScrollFactor(0);
         this.unlock_Tear = true;
+        this.explicationText.setVisible(true);
+        this.explicationText.setText('You feel the power of the water')
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
     }
 
     checkTear() {

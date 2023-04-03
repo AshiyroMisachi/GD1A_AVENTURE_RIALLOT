@@ -162,6 +162,15 @@ class WaterTemple extends Phaser.Scene {
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
 
+        //Création Texte Explicatif
+        if (this.statue < 12){
+            this.explicationText = this.add.text(100, 112, "The statue you collected react with the door front of you, but there power are not enought", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+        }
+        else {
+            this.explicationText = this.add.text(100, 112, "The door front of you opened by the power of the statue", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+        }
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+
         //Création Boss
         this.boss = this.physics.add.sprite(1360, 1856, 'boss').setVelocityX(100).setPushable(false);
 
@@ -429,6 +438,7 @@ class WaterTemple extends Phaser.Scene {
         proj.destroy();
         this.boss_health -= 10;
         if (this.boss_health <= 0) {
+            this.explicationText.setText("You defeat the monster.");
             boss.destroy();
             this.bossAlive = false;
             this.gameWin = true;
@@ -550,6 +560,7 @@ class WaterTemple extends Phaser.Scene {
         this.healthMask.x -= 10;
         this.health -= 10;
         if (this.health < 0) {
+            this.explicationText.setText("You died.");
             this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();

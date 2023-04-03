@@ -187,6 +187,10 @@ class DarkForest extends Phaser.Scene {
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
 
+        //Création Texte Explicatif
+        this.explicationText = this.add.text(100, 112, "Vous vous réveillez dans une sombre clairière au bord d'un lac...", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
         this.pont_1.setCollisionByProperty({ estSolide: true });
@@ -468,6 +472,7 @@ class DarkForest extends Phaser.Scene {
         this.healthMask.x -= 24.9;
         this.health -= 10;
         if (this.health <= 0) {
+            this.explicationText.setText("You died.");
             this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();
@@ -495,18 +500,34 @@ class DarkForest extends Phaser.Scene {
         statuette.disableBody(true, true);
         this.statue += 1;
         this.countStatue.setText('x' + this.statue);
+        if (this.statue == 1) {
+            this.explicationText.setVisible(true);
+            this.explicationText.setText('This statue give off a weird feeling')
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        }
+        else if (this.statue == 12) {
+            this.explicationText.setVisible(true);
+            this.explicationText.setText('You heard a big sound from the lake in the forest')
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        }
     }
 
     //Unlock Power Up
     swordUnlock(player, sword) {
         sword.disableBody(true, true);
         this.add.image(328, 28, 'sword_up').setScrollFactor(0);
+        this.explicationText.setVisible(true);
+        this.explicationText.setText('You find a sword, press SPACE to use it')
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
         this.unlock_Sword = true;
     }
 
     bowUnlock(player, bow) {
         bow.disableBody(true, true);
         this.add.image(385, 28, 'Bow').setScale(1.25).setScrollFactor(0);
+        this.explicationText.setVisible(true);
+        this.explicationText.setText('You find the power of a huge spirit, press SHIFT to cast fireball')
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
         this.unlock_Bow = true;
     }
 

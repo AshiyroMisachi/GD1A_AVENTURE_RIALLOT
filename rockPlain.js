@@ -157,13 +157,15 @@ class RockPlain extends Phaser.Scene {
         //Placement Switch Scene
         this.travelToForest = this.physics.add.staticGroup();
         this.travelToForest.create(672, 3168 + 16, "RockToForest");
-
         this.travelToCave = this.physics.add.staticGroup();
         this.travelToCave.create(3184, 1216, "RockToCave");
 
         //Création Joueur
         this.player = this.physics.add.sprite(this.spawnX, this.spawnY, 'perso').setScale(0.5);
         this.player.setCollideWorldBounds(true);
+
+        //Création Texte Explicatif
+        this.explicationText = this.add.text(100, 112, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
@@ -467,6 +469,7 @@ class RockPlain extends Phaser.Scene {
         this.healthMask.x -= 10;
         this.health -= 10;
         if (this.health < 0) {
+            this.explicationText.setText("You died.");
             this.gameOver = true;
             player.setTint(0xff0000);
             this.physics.pause();
@@ -494,6 +497,16 @@ class RockPlain extends Phaser.Scene {
         statuette.disableBody(true, true);
         this.statue += 1;
         this.countStatue.setText('x' + this.statue);
+        if (this.statue == 1) {
+            this.explicationText.setVisible(true);
+            this.explicationText.setText('This statue give off a weird feeling')
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        }
+        else if (this.statue == 12) {
+            this.explicationText.setVisible(true);
+            this.explicationText.setText('You heard a big sound from the lake in the forest')
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        }
     }
 
     //Unlock Power Up
@@ -510,7 +523,11 @@ class RockPlain extends Phaser.Scene {
         key.disableBody(true, true);
         this.unlock_Key = true;
         this.add.image(500, 28, 'Key').setScale(1.75).setScrollFactor(0);
+        this.explicationText.setVisible(true);
+        this.explicationText.setText('This key looks very old')
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
     }
+
     //Fonction Changement de scene
     toForest() {
         console.log("To Forest");
