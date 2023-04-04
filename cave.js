@@ -156,7 +156,9 @@ class Cave extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         //Création Texte Explicatif
-        this.explicationText = this.add.text(100, 112, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+        this.zoneText = this.add.image(400, 420, "zoneText").setScrollFactor(0);
+        this.zoneText.setVisible(false);
+        this.explicationText = this.add.text(80, 404, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
@@ -480,13 +482,15 @@ class Cave extends Phaser.Scene {
         this.countStatue.setText('x' + this.statue);
         if (this.statue == 1) {
             this.explicationText.setVisible(true);
+            this.zoneText.setVisible(true)
             this.explicationText.setText('This statue give off a weird feeling')
-            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         }
         else if (this.statue == 12) {
             this.explicationText.setVisible(true);
+            this.zoneText.setVisible(true)
             this.explicationText.setText('You heard a big sound from the lake in the forest')
-            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         }
     }
 
@@ -496,8 +500,9 @@ class Cave extends Phaser.Scene {
         this.add.image(443, 28, 'Tear').setScale(2).setScrollFactor(0);
         this.unlock_Tear = true;
         this.explicationText.setVisible(true);
+        this.zoneText.setVisible(true)
         this.explicationText.setText('You feel the power of the water')
-        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
     }
 
     checkTear() {

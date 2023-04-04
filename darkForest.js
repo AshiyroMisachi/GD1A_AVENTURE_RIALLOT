@@ -9,10 +9,10 @@ class DarkForest extends Phaser.Scene {
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
         this.statue = data.statue;
-        this.unlock_Sword = true;
-        this.unlock_Bow = true;
-        this.unlock_Tear = true;
-        this.unlock_Key = true;
+        this.unlock_Sword = data.unlock_Sword;
+        this.unlock_Bow = data.unlock_Bow;
+        this.unlock_Tear = data.unlock_Tear;
+        this.unlock_Key = data.unlock_Key;
         this.health = data.health;
         this.spawnX = data.spawnX;
         this.spawnY = data.spawnY;
@@ -189,12 +189,14 @@ class DarkForest extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         //Création Texte Explicatif
-        this.explicationText = this.add.text(100, 112, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+        this.zoneText = this.add.image(400, 420, "zoneText").setScrollFactor(0);
+        this.explicationText = this.add.text(80, 404, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
         if (this.start) {
             this.explicationText.setText("Vous vous réveillez dans une sombre clairière au bord d'un lac...");
-            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
             this.start = false;
         }
+        else { this.zoneText.setVisible(false) }
         
 
         //Calque Solide
@@ -507,13 +509,15 @@ class DarkForest extends Phaser.Scene {
         this.countStatue.setText('x' + this.statue);
         if (this.statue == 1) {
             this.explicationText.setVisible(true);
+            this.zoneText.setVisible(true)
             this.explicationText.setText('This statue give off a weird feeling')
-            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         }
         else if (this.statue == 12) {
             this.explicationText.setVisible(true);
+            this.zoneText.setVisible(true)
             this.explicationText.setText('You heard a big sound from the lake in the forest')
-            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         }
     }
 
@@ -522,8 +526,9 @@ class DarkForest extends Phaser.Scene {
         sword.disableBody(true, true);
         this.add.image(328, 28, 'sword_up').setScrollFactor(0);
         this.explicationText.setVisible(true);
+        this.zoneText.setVisible(true)
         this.explicationText.setText('You find a sword, press SPACE to use it')
-        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         this.unlock_Sword = true;
     }
 
@@ -531,8 +536,9 @@ class DarkForest extends Phaser.Scene {
         bow.disableBody(true, true);
         this.add.image(385, 28, 'Bow').setScale(1.25).setScrollFactor(0);
         this.explicationText.setVisible(true);
+        this.zoneText.setVisible(true)
         this.explicationText.setText('You find the power of a huge spirit, press SHIFT to cast fireball')
-        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         this.unlock_Bow = true;
     }
 

@@ -165,7 +165,9 @@ class RockPlain extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         //Création Texte Explicatif
-        this.explicationText = this.add.text(100, 112, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+        this.zoneText = this.add.image(400, 420, "zoneText").setScrollFactor(0);
+        this.zoneText.setVisible(false);
+        this.explicationText = this.add.text(80, 404, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
@@ -499,13 +501,15 @@ class RockPlain extends Phaser.Scene {
         this.countStatue.setText('x' + this.statue);
         if (this.statue == 1) {
             this.explicationText.setVisible(true);
+            this.zoneText.setVisible(true);this.zoneText.setVisible(false)
             this.explicationText.setText('This statue give off a weird feeling')
-            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         }
         else if (this.statue == 12) {
             this.explicationText.setVisible(true);
+            this.zoneText.setVisible(true);
             this.explicationText.setText('You heard a big sound from the lake in the forest')
-            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+            this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
         }
     }
 
@@ -524,8 +528,9 @@ class RockPlain extends Phaser.Scene {
         this.unlock_Key = true;
         this.add.image(500, 28, 'Key').setScale(1.75).setScrollFactor(0);
         this.explicationText.setVisible(true);
+        this.zoneText.setVisible(true)
         this.explicationText.setText('This key looks very old')
-        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
+        this.time.delayedCall(2000, () => { this.explicationText.setVisible(false); this.zoneText.setVisible(false) }, [], this);
     }
 
     //Fonction Changement de scene
