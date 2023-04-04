@@ -189,8 +189,9 @@ class DarkForest extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         //Création Texte Explicatif
+        this.explicationText = this.add.text(100, 112, "", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
         if (this.start) {
-            this.explicationText = this.add.text(100, 112, "Vous vous réveillez dans une sombre clairière au bord d'un lac...", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
+            this.explicationText.setText("Vous vous réveillez dans une sombre clairière au bord d'un lac...");
             this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
             this.start = false;
         }
