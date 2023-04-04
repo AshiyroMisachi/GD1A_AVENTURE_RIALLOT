@@ -9,10 +9,10 @@ class DarkForest extends Phaser.Scene {
     init(data) {
         this.porteMonnaie = data.porteMonnaie;
         this.statue = data.statue;
-        this.unlock_Sword = data.unlock_Sword;
-        this.unlock_Bow = data.unlock_Bow;
-        this.unlock_Tear = data.unlock_Tear;
-        this.unlock_Key = data.unlock_Key;
+        this.unlock_Sword = true;
+        this.unlock_Bow = true;
+        this.unlock_Tear = true;
+        this.unlock_Key = true;
         this.health = data.health;
         this.spawnX = data.spawnX;
         this.spawnY = data.spawnY;
@@ -192,7 +192,7 @@ class DarkForest extends Phaser.Scene {
         if (this.start) {
             this.explicationText = this.add.text(100, 112, "Vous vous réveillez dans une sombre clairière au bord d'un lac...", { fontSize: '16px', fill: '#000' }).setScrollFactor(0);
             this.time.delayedCall(2000, () => { this.explicationText.setVisible(false) }, [], this);
-            this.statue = false;
+            this.start = false;
         }
         
 

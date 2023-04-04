@@ -39,13 +39,6 @@ class Cave extends Phaser.Scene {
         );
 
         //Load Calque
-        //Placement Environnement
-        this.rock = this.physics.add.group();
-        this.calque_Rock = this.carteCave.getObjectLayer('Rock');
-        this.calque_Rock.objects.forEach(calque_Rock => {
-            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock_2").setPushable(false);
-        });
-
         //Mur
         this.bordure = this.carteCave.createLayer(
             "Bordure",
@@ -66,6 +59,13 @@ class Cave extends Phaser.Scene {
             this.mob.add(this.mob_create)
         });
         this.mob.setVelocityY(100);
+
+        //Placement Environnement
+        this.rock = this.physics.add.group();
+        this.calque_Rock = this.carteCave.getObjectLayer('Rock');
+        this.calque_Rock.objects.forEach(calque_Rock => {
+            const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock_2").setPushable(false);
+        });
 
         //Placement Test Monnaie et Soin
         this.heal = this.physics.add.group();
