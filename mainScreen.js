@@ -5,7 +5,8 @@ class MainScreen extends Phaser.Scene {
 
     preload() {
         //Bouton de lancement
-        this.load.image("Button_Game", "assets/launchGame.png");
+        this.load.image("Button_Game", "assets/start.png");
+        this.load.image("Logo", "assets/Logo.png");
 
         //Sprite Perso
         this.load.spritesheet('perso', 'assets/perso.png',
@@ -68,7 +69,8 @@ class MainScreen extends Phaser.Scene {
     }
 
     create() {
-        this.gameButton = this.add.image(400, 200, "Button_Game").setInteractive();
+        this.add.image(380, 120, "Logo").setScale(0.2);
+        this.gameButton = this.add.image(400, 325, "Button_Game").setInteractive().setScale(0.2);
         this.gameButton.on("pointerdown", this.launchGame, this);
 
         //Animation Boss
