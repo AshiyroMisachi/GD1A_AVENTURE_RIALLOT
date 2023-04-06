@@ -212,7 +212,7 @@ class WaterTemple extends Phaser.Scene {
 
         //Rocher
         this.physics.add.collider(this.rock, this.bordure);
-        this.physics.add.overlap(this.rock, this.rock);
+        this.physics.add.collider(this.rock, this.rock);
 
         //Changement de scene
         this.physics.add.overlap(this.player, this.travelToForest, this.toForest, null, this);
@@ -501,9 +501,9 @@ class WaterTemple extends Phaser.Scene {
             console.log("left")
             rock1.setVelocityX(-60);
         }
-        this.time.delayedCall(1000, (rock2) => {
-            rock2.body.setVelocity(0);
-        }, [rock2], this)
+        this.time.delayedCall(1000, (rock1) => {
+            rock1.body.setVelocity(0);
+        }, [rock1], this)
     }*/
     
 
