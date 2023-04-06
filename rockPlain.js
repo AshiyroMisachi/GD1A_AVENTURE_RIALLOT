@@ -149,7 +149,7 @@ class RockPlain extends Phaser.Scene {
         //Création Barre de vie
         this.healthContainer = this.add.sprite(140, 28, "CadreVie").setScrollFactor(0).setVisible(false);
         this.healthBar = this.add.sprite(this.healthContainer.x, this.healthContainer.y, "BarreVie").setScrollFactor(0).setScale(0.5);
-        this.healthMask = this.add.sprite(this.healthBar.x - (498 - this.health), this.healthBar.y, "BarreVie").setScrollFactor(0).setScale(0.5);
+        this.healthMask = this.add.sprite(this.healthBar.x - (500 - this.health), this.healthBar.y, "MasqueVie").setScrollFactor(0).setScale(0.5);
         this.healthMask.visible = false;
         this.healthBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMask);
         
@@ -468,9 +468,10 @@ class RockPlain extends Phaser.Scene {
             player.setVelocityY(400);
         }
         this.pinvisible();
-        this.healthMask.x -= 24.9;
-        this.health -= 24.9;
+        this.healthMask.x -= 25;
+        this.health -= 25;
         if (this.health < 0) {
+            this.explicationText.setVisible(true);
             this.explicationText.setText("You died.");
             this.gameOver = true;
             player.setTint(0xff0000);
@@ -483,9 +484,9 @@ class RockPlain extends Phaser.Scene {
 
     gainVie(player, heal) {
         heal.disableBody(true, true);
-        if (this.health < 498) {
-            this.health += 24.9
-            this.healthMask.x += 24.9;
+        if (this.health < 500) {
+            this.health += 25;
+            this.healthMask.x += 25;
         }
     }
 

@@ -42,7 +42,7 @@ class MainScreen extends Phaser.Scene {
 
         //Preload Inventaire
         this.load.image("BarreInventaire", "assets/BarreInventaire.png");
-        this.load.image("CadreVie", "assets/CadreVie.png");
+        this.load.image("MasqueVie", "assets/BarreMasqueVie.png");
         this.load.image("BarreVie", "assets/BarreVie.png");
         this.load.image("zoneText", "assets/ZoneTexte.png");
 
