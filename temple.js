@@ -212,7 +212,7 @@ class WaterTemple extends Phaser.Scene {
 
         //Rocher
         this.physics.add.collider(this.rock, this.bordure);
-        this.physics.add.collider(this.rock, this.rock);
+        this.physics.add.overlap(this.rock, this.rock);
 
         //Changement de scene
         this.physics.add.overlap(this.player, this.travelToForest, this.toForest, null, this);
@@ -330,7 +330,6 @@ class WaterTemple extends Phaser.Scene {
                         this.randomAttackBoss = Math.floor(Math.random() * (4 - 1)) + 1;
                         this.bossAttackCount = 0;
                         this.bossNotAttack = false;
-                        console.log(this.randomAttackBoss);
                     }
                     else {
                         if (this.randomAttackBoss == 1) {
@@ -481,6 +480,32 @@ class WaterTemple extends Phaser.Scene {
         }, [rock], this)
         proj.disableBody(true, true);
     }
+
+    /*moveRocktoRock(rock2, rock1) {
+        console.log('Colli')
+        rock2.setVelocityX(0);
+        rock2.setVelocityY(0);
+        if (rock2.body.touching.up) {
+            console.log("up")
+            rock1.setVelocityY(-60);
+        }
+        else if (rock2.body.touching.down) {
+            console.log("down")
+            rock1.setVelocityY(60);
+        }
+        else if (rock2.body.touching.right) {
+            console.log("right")
+            rock1.setVelocityX(60);
+        }
+        else if (rock2.body.touching.left) {
+            console.log("left")
+            rock1.setVelocityX(-60);
+        }
+        this.time.delayedCall(1000, (rock2) => {
+            rock2.body.setVelocity(0);
+        }, [rock2], this)
+    }*/
+    
 
     //Clean Attaque
     clean_attaque(attaque) {
