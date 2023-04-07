@@ -25,10 +25,12 @@ class WaterTemple extends Phaser.Scene {
         this.player_block = false;
         this.player_beHit = false;
         this.clignotement = 0;
+        this.clignotementBoss = 0;
         this.trigger_cleanSword = false;
         this.trigger_shoot = false;
         this.player_facing = "up";
 
+        this.boss_beHit = false;
         this.bossAlive = true;
         this.attackBoss = true;
         this.bossAttackCount = 0;
@@ -56,6 +58,11 @@ class WaterTemple extends Phaser.Scene {
 
         this.river = this.carteTemple.createLayer(
             "River",
+            this.tileset
+        );
+
+        this.pure_water = this.carteTemple.createLayer(
+            "PureWater",
             this.tileset
         );
 
@@ -175,10 +182,16 @@ class WaterTemple extends Phaser.Scene {
 
         //Création Boss
         this.boss = this.physics.add.sprite(1360, 1856, 'boss').setVelocityX(100).setPushable(false);
+        this.healthContainerBoss = this.add.sprite(this.boss.x,this.boss.y + 52 , "CadreVieBoss");
+        this.healthBarBoss = this.add.sprite(this.healthContainerBoss.x, this.healthContainerBoss.y, "BarreVieBoss");
+        this.healthMaskBoss = this.add.sprite(this.healthBarBoss.x , this.healthBarBoss.y, "BarreVieBoss");
+        this.healthMaskBoss.visible = false;
+        this.healthBarBoss.mask = new Phaser.Display.Masks.BitmapMask(this, this.healthMaskBoss);
 
         //Calque Solide
         this.bordure.setCollisionByProperty({ estSolide: true });
         this.river.setCollisionByProperty({ estSolide: true });
+        this.pure_water.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_down.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_up.setCollisionByProperty({ estSolide: true });
         this.calque_mob_switch_left.setCollisionByProperty({ estSolide: true });
@@ -199,6 +212,7 @@ class WaterTemple extends Phaser.Scene {
         //Joueur
         this.physics.add.collider(this.player, this.bordure);
         this.physics.add.collider(this.player, this.rock);
+        this.physics.add.collider(this.player, this.pure_water);
         this.physics.add.collider(this.player, this.river, null, this.checkTear, this);
         this.physics.add.collider(this.player, this.door, this.opendDoor, null, this);
         this.physics.add.overlap(this.player, this.mob, this.perteVie, this.getHit, this);
@@ -234,7 +248,8 @@ class WaterTemple extends Phaser.Scene {
         this.physics.add.collider(this.boss, this.calque_mob_switch_right, this.boss_switch_right, null, this);
         this.physics.add.collider(this.mob, this.attaque_sword, this.kill_mob, null, this);
         this.physics.add.collider(this.mob, this.proj_Bow, this.kill_mob_bow, null, this);
-        this.physics.add.collider(this.boss, this.proj_Bow, this.perteVie_Boss_proj, null, this);
+        this.physics.add.collider(this.boss, this.proj_Bow, this.perteVie_Boss_proj, this.bossGetHit, this);
+        this.physics.add.collider(this.boss, this.attaque_sword, this.perteVie_Boss_sword, this.bossGetHit, this);
     }
 
     update() {
@@ -322,66 +337,68 @@ class WaterTemple extends Phaser.Scene {
                 this.player.setVelocityY(0);
                 this.time.delayedCall(1000, this.delock_shoot, [], this);
             }
-
-            //Attaque Boss
-            if (this.bossAlive) {
-                if (this.attackBoss) {
-                    if (this.bossNotAttack) {
-                        this.randomAttackBoss = Math.floor(Math.random() * (4 - 1)) + 1;
-                        this.bossAttackCount = 0;
-                        this.bossNotAttack = false;
+        }
+        //Attaque Boss
+        if (this.bossAlive) {
+            this.healthContainerBoss.setPosition(this.boss.x, this.boss.y + 52);
+            this.healthBarBoss.setPosition(this.healthContainerBoss.x, this.healthContainerBoss.y);
+            this.healthMaskBoss.setPosition(this.healthBarBoss.x - (100 - this.boss_health), this.healthBarBoss.y);
+            if (this.attackBoss) {
+                if (this.bossNotAttack) {
+                    this.randomAttackBoss = Math.floor(Math.random() * (4 - 1)) + 1;
+                    this.bossAttackCount = 0;
+                    this.bossNotAttack = false;
+                }
+                else {
+                    if (this.randomAttackBoss == 1) {
+                        //3 coup rapide
+                        if (this.bossAttackCount < 3) {
+                            this.bossAttackCount += 1;
+                            this.attackBoss = false;
+                            this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-100);
+                            if (this.bossAttackCount == 3) {
+                                this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
+                            }
+                            else {
+                                this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
+                            }
+                        }
+                        else {
+                            this.bossNotAttack = true;
+                        }
                     }
-                    else {
-                        if (this.randomAttackBoss == 1) {
-                            //3 coup rapide
-                            if (this.bossAttackCount < 3) {
-                                this.bossAttackCount += 1;
-                                this.attackBoss = false;
-                                this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-100);
-                                if (this.bossAttackCount == 3) {
-                                    this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
-                                }
-                                else {
-                                    this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
-                                }
+                    else if (this.randomAttackBoss == 2) {
+                        //2 coup tres rapide
+                        if (this.bossAttackCount < 2) {
+                            this.bossAttackCount += 1;
+                            this.attackBoss = false;
+                            this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-150);
+                            if (this.bossAttackCount == 2) {
+                                this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
                             }
                             else {
-                                this.bossNotAttack = true;
+                                this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
                             }
                         }
-                        else if (this.randomAttackBoss == 2) {
-                            //2 coup tres rapide
-                            if (this.bossAttackCount < 2) {
-                                this.bossAttackCount += 1;
-                                this.attackBoss = false;
-                                this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-150);
-                                if (this.bossAttackCount == 2) {
-                                    this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
-                                }
-                                else {
-                                    this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
-                                }
+                        else {
+                            this.bossNotAttack = true;
+                        }
+                    }
+                    else if (this.randomAttackBoss == 3) {
+                        //4 coup lent
+                        if (this.bossAttackCount < 4) {
+                            this.bossAttackCount += 1;
+                            this.attackBoss = false;
+                            this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-30);
+                            if (this.bossAttackCount == 4) {
+                                this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
                             }
                             else {
-                                this.bossNotAttack = true;
+                                this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
                             }
                         }
-                        else if (this.randomAttackBoss == 3) {
-                            //4 coup lent
-                            if (this.bossAttackCount < 4) {
-                                this.bossAttackCount += 1;
-                                this.attackBoss = false;
-                                this.projBoss.create(this.boss.x, this.boss.y, "projBoss").body.setVelocityY(-30);
-                                if (this.bossAttackCount == 4) {
-                                    this.time.delayedCall(1500, () => {this.attackBoss = true; this.bossNotAttack = true}, [], this);
-                                }
-                                else {
-                                    this.time.delayedCall(300, () => {this.attackBoss = true}, [], this);
-                                }
-                            }
-                            else {
-                                this.bossNotAttack = true;
-                            }
+                        else {
+                            this.bossNotAttack = true;
                         }
                     }
                 }
@@ -435,17 +452,70 @@ class WaterTemple extends Phaser.Scene {
         this.lootMob(mob);
     }
 
+    //Gestion Boss
+    bossGetHit() {
+        if (this.boss_beHit == false) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    bossInvisible() {
+        this.boss.setVisible(false);
+        this.time.delayedCall(100, this.bossVisible, [], this);
+    }
+
+    bossVisible() {
+        if (this.clignotementBoss < 3) {
+            this.time.delayedCall(100, this.bossInvisible, [], this);
+            this.boss.visible = true;
+            this.clignotementBoss += 1;
+        }
+        else {
+            this.boss.visible = true;
+            this.clignotementBoss = 0;
+            this.boss_beHit = false;
+        }
+    }
+
     perteVie_Boss_proj(boss, proj) {
         proj.destroy();
         this.boss_health -= 10;
         if (this.boss_health <= 0) {
+            this.healthContainerBoss.setVisible(false);
+            this.healthMaskBoss.setPosition(this.healthBarBoss.x - (100 - this.boss_health), this.healthBarBoss.y);
             this.zoneText.setVisible(true);
             this.explicationText.setVisible(true);
-            this.explicationText.setText("You defeat the monster. With " + this.statue + " statue and you collected " + this.porteMonnaie + " eggs !");
+            this.explicationText.setText("You defeat the monster with " + this.statue + " statues and you collected " + this.porteMonnaie + " eggs !");
             this.physics.pause();
             boss.destroy();
             this.bossAlive = false;
             this.gameWin = true;
+        }
+        else {
+            this.boss_beHit = true;
+            this.bossInvisible();
+        }
+    }
+
+    perteVie_Boss_sword(boss, sword) {
+        this.boss_health -= 30;
+        if (this.boss_health <= 0) {
+            this.healthContainerBoss.setVisible(false);
+            this.healthMaskBoss.setPosition(this.healthBarBoss.x - (100 - this.boss_health), this.healthBarBoss.y);
+            this.zoneText.setVisible(true);
+            this.explicationText.setVisible(true);
+            this.explicationText.setText("You defeat the monster with " + this.statue + " statues and you collected " + this.porteMonnaie + " eggs !");
+            this.physics.pause();
+            boss.destroy();
+            this.bossAlive = false;
+            this.gameWin = true;
+        }
+        else {
+            this.boss_beHit = true;
+            this.bossInvisible();
         }
     }
 
