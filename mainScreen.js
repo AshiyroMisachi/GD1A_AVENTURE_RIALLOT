@@ -67,6 +67,10 @@ class MainScreen extends Phaser.Scene {
         this.load.image("Rock", "assets/Rock.png");
         this.load.image("Rock_2", "assets/rock2.png");
         this.load.image("Door", "assets/Porte.png");
+
+        //Preload Barre Vie Boss
+        this.load.image("BarreVieBoss", "assets/BarreVieBoss.png");
+        this.load.image("CadreVieBoss", "assets/CadreVieBoss.png");
     }
 
     create() {
@@ -189,7 +193,7 @@ class MainScreen extends Phaser.Scene {
             unlock_Bow : false,
             unlock_Tear : false,
             unlock_Key : false,
-            health : 498,
+            health : 500,
             spawnX : 1952,
             spawnY : 2316,
         });
