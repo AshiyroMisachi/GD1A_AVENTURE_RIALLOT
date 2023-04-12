@@ -11,8 +11,8 @@
             "scale": 0.268375,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1598.5095482068004,
-                "y": 1596.6464834653007
+                "x": 1602.2356776897996,
+                "y": 1598.5095482068002
             }
         },
         "DarkForest.tmx": {
@@ -38,8 +38,8 @@
             "scale": 1,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 1600,
-                "y": 1599
+                "x": 1599,
+                "y": 1598
             }
         },
         "Tileset_Final.tsx": {
