@@ -1,5 +1,5 @@
 {
-    "activeFile": "Temple.tmx",
+    "activeFile": "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/etang.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -7,20 +7,121 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "C:/Users/Riallot/Documents/GitHub/Mushroom-Gang/alpha_V01/maps/tileset_placeHolder.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/Mushroom-Gang/alpha_V01/maps/tileset_test.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/etang.tmx": {
+            "expandedObjectLayers": [
+                15
+            ],
+            "scale": 0.125,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 9600,
+                "y": 3516
+            }
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/etang.tmx#tileset_test": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/grotte.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 8064,
+                "y": 1694
+            }
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/marais.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 9024,
+                "y": 2876
+            }
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/tileset_placeHolder.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/tileset_test.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/etang.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 2544,
+                "y": 6176
+            }
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/etang.tmx#tileset_placeHolder": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/etang.tmx#tileset_test": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/grotte.tmx": {
+            "expandedGroupLayers": [
+                6
+            ],
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.125,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 4424,
+                "y": 1736
+            }
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/marais.tmx": {
+            "expandedGroupLayers": [
+                6
+            ],
+            "scale": 0.125,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 9016,
+                "y": 2868
+            }
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/sceneTest.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1600,
+                "y": 1599
+            }
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/tileset_placeHolder.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/tileset_test.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
         "Cave.tmx": {
             "scale": 0.268375,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1602.2356776897996,
-                "y": 1598.5095482068002
+                "x": 1598.5095482068004,
+                "y": 1596.6464834653007
             }
         },
         "DarkForest.tmx": {
-            "scale": 0.25,
+            "scale": 0.125,
             "selectedLayer": 9,
             "viewCenter": {
                 "x": 1336,
-                "y": 1756
+                "y": 1760
             }
         },
         "DarkForest.tmx#Tileset_Final": {
@@ -30,8 +131,8 @@
             "scale": 0.268375,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1602.2356776897996,
-                "y": 1602.2356776897996
+                "x": 1598.5095482068004,
+                "y": 1596.6464834653007
             }
         },
         "Temple.tmx": {
@@ -49,21 +150,35 @@
             "scaleInDock": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
-    "last.externalTilesetPath": "C:/Users/Riallot/Documents/GitHub/ZeldaLike/assets/Tiled",
-    "map.lastUsedExportFilter": "Tous les Fichiers (*)",
+    "last.exportedFilePath": "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/assets/json",
+    "last.externalTilesetPath": "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps",
+    "last.imagePath": "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps",
+    "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
     "openFiles": [
-        "Temple.tmx",
-        "DarkForest.tmx",
-        "RockPlain.tmx",
-        "Cave.tmx"
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/etang.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/grotte.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/marais.tmx"
     ],
     "project": "",
     "property.type": "bool",
     "recentFiles": [
-        "Cave.tmx",
-        "RockPlain.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/marais.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/grotte.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/etang.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/tileset_test.tsx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/marais.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/sceneTest.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/etang.tmx",
+        "C:/Users/Riallot/Documents/GitHub/ProjectFrog/maps/grotte.tmx",
+        "C:/Users/Riallot/Documents/GitHub/Mushroom-Gang/alpha_V01/maps/tileset_placeHolder.tsx",
         "DarkForest.tmx",
-        "Temple.tmx"
-    ]
+        "Cave.tmx",
+        "RockPlain.tmx"
+    ],
+    "resizeMap.removeObjects": false,
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
 }
