@@ -18,13 +18,14 @@
         },
         "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/etang.tmx": {
             "expandedObjectLayers": [
+                17,
                 15
             ],
-            "scale": 0.125,
+            "scale": 0.75,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 9600,
-                "y": 3516
+                "x": 16449.333333333332,
+                "y": 5049.333333333333
             }
         },
         "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/etang.tmx#tileset_test": {
@@ -34,16 +35,19 @@
             "scale": 0.25,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 8064,
-                "y": 1694
+                "x": 14364,
+                "y": 1692
             }
         },
         "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/marais.tmx": {
-            "scale": 0.125,
+            "expandedObjectLayers": [
+                11
+            ],
+            "scale": 0.33,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 9024,
-                "y": 2876
+                "x": 1933.3333333333335,
+                "y": 3893.939393939394
             }
         },
         "C:/Users/Riallot/Documents/GitHub/ProjectFrog/beta/maps/tileset_placeHolder.tsx": {
